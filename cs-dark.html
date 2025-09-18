@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StableCoin — 信頼できるステーブルコイン発行プラットフォーム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <style type="text/tailwindcss">
+    :root {
+      --primary-color: #6366f1;
+      --accent-color: #22d3ee;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui;
+      @apply bg-slate-950 text-white antialiased;
+    }
+
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.1) 1px, transparent 0);
+      background-size: 56px 56px;
+    }
+
+    @keyframes aurora {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes floatSlow {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-14px) scale(1.02);
+      }
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.98);
+      }
+      50% {
+        opacity: 0.95;
+        transform: scale(1.02);
+      }
+    }
+
+    .fade-section {
+      @apply opacity-0 translate-y-12 transition-all duration-700 ease-out;
+      transition-delay: var(--delay, 0s);
+    }
+
+    .fade-section.is-visible {
+      @apply opacity-100 translate-y-0;
+    }
+
+    .reveal-card {
+      @apply opacity-0 translate-y-6 transition-transform transition-opacity duration-700 ease-out;
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal-card.is-visible {
+      @apply opacity-100 translate-y-0;
+    }
+
+    @layer components {
+      .glass-panel {
+        @apply rounded-[28px] border border-white/10 bg-white/[0.08] backdrop-blur-3xl shadow-[0_25px_80px_-25px_rgba(99,102,241,0.35)];
+      }
+      .feature-card {
+        @apply glass-panel p-8 flex flex-col gap-5 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_-30px_rgba(34,211,238,0.55)];
+      }
+      .stat-card {
+        @apply glass-panel p-6 flex flex-col gap-3 min-h-[160px] relative overflow-hidden;
+      }
+      .stat-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(99,102,241,0.3), transparent 55%);
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+      .stat-card:hover::after {
+        opacity: 1;
+      }
+      .badge-soft {
+        @apply inline-flex items-center gap-2 rounded-full border border-indigo-400/30 bg-indigo-500/15 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-indigo-100;
+      }
+      .chip {
+        @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs text-white/70;
+      }
+    }
+
+    .cta-button {
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(120deg, #4f46e5, #6366f1, #0ea5e9);
+      box-shadow: 0 22px 40px -24px rgba(79, 70, 229, 0.8);
+      transition: transform 0.4s ease;
+    }
+
+    .cta-button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.3), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-button:hover::after {
+      opacity: 1;
+    }
+
+    .hero-orb {
+      background: radial-gradient(circle at top, rgba(99, 102, 241, 0.65), rgba(15, 23, 42, 0.05) 60%);
+      animation: aurora 16s ease-in-out infinite;
+      background-size: 160% 160%;
+    }
+
+    .floating-card {
+      animation: floatSlow 7s ease-in-out infinite;
+    }
+
+    .pulse-ring {
+      animation: pulseSoft 6s ease-in-out infinite;
+    }
+
+    .particle {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.35), transparent 70%);
+      filter: blur(30px);
+      opacity: 0.3;
+      transition: transform 1.6s ease, opacity 1.6s ease;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body>
+  <div class="relative min-h-screen overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+    <div class="pointer-events-none absolute inset-0 bg-grid opacity-40"></div>
+    <div class="pointer-events-none absolute inset-0">
+      <div class="particle -top-16 -left-10" data-speed="0.6"></div>
+      <div class="particle bottom-0 right-0" data-speed="1.1" style="opacity: 0.45"></div>
+      <div class="particle top-1/3 left-1/2" data-speed="0.9" style="opacity: 0.25"></div>
+    </div>
+
+    <header class="relative z-20">
+      <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 lg:py-8">
+        <a href="#hero" class="flex items-center gap-3 text-white">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 shadow-lg shadow-indigo-500/30 backdrop-blur-lg text-lg font-semibold">SC</span>
+          <div class="flex flex-col leading-tight">
+            <span class="text-base font-semibold tracking-tight">StableCoin</span>
+            <span class="text-[11px] uppercase tracking-[0.42em] text-white/50">Issuance Suite</span>
+          </div>
+        </a>
+        <div class="hidden items-center gap-8 text-sm text-white/70 md:flex">
+          <a href="#features" class="transition hover:text-white">主要機能</a>
+          <a href="#architecture" class="transition hover:text-white">アーキテクチャ</a>
+          <a href="#partners" class="transition hover:text-white">エコシステム</a>
+          <a href="#faq" class="transition hover:text-white">FAQ</a>
+        </div>
+        <div class="hidden md:flex items-center gap-4">
+          <button class="chip">マルチチェーン対応</button>
+          <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold">
+            デモを予約
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.75v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v15a.75.75 0 00.75.75h12a.75.75 0 00.75-.75v-4.5M21 12h-12m0 0l3.75-3.75M9 12l3.75 3.75" />
+            </svg>
+          </a>
+        </div>
+        <button class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-white/70 transition hover:text-white md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main class="relative z-10">
+      <section id="hero" class="fade-section" data-section style="--delay: 0.05s">
+        <div class="mx-auto grid max-w-6xl gap-12 px-6 pb-24 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:pb-32 lg:pt-20">
+          <div class="space-y-10">
+            <div class="space-y-5">
+              <span class="badge-soft">DeFi向けに再設計</span>
+              <h1 class="text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+                発行・流通・ガバナンスまで<br />
+                <span class="bg-gradient-to-r from-indigo-300 via-indigo-200 to-cyan-200 bg-clip-text text-transparent">次世代ステーブルコイン運用基盤</span>
+              </h1>
+              <p class="text-base leading-relaxed text-white/70 md:max-w-xl">
+                StableCoinは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるための包括的なプラットフォームです。
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold">
+                プラットフォームに接続
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 12h13.5M12 5.25L18.75 12 12 18.75" />
+                </svg>
+              </a>
+              <a href="#features" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-base font-semibold text-white/80 transition hover:border-white/20 hover:text-white">
+                機能を確認
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8m-8 5h4" />
+                </svg>
+              </a>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.1s">
+                <span class="text-sm text-white/50">発行リードタイム</span>
+                <p class="text-3xl font-semibold text-white">30 分以内</p>
+                <span class="text-sm text-emerald-300/80">自動承認 + デプロイ</span>
+              </div>
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.2s">
+                <span class="text-sm text-white/50">対応チェーン数</span>
+                <p class="text-3xl font-semibold text-white">7+</p>
+                <span class="text-sm text-white/60">主要EVMと高速チェーン</span>
+              </div>
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.3s">
+                <span class="text-sm text-white/50">リアルタイム監視</span>
+                <p class="text-3xl font-semibold text-white">24/7</p>
+                <span class="text-sm text-white/60">アラート遅延5秒未満</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative flex justify-center lg:justify-end">
+            <div class="hero-orb relative h-full max-w-lg rounded-[36px] border border-white/10 bg-white/5 p-10 backdrop-blur-2xl">
+              <div class="absolute -inset-6 rounded-[40px] border border-indigo-500/20 pulse-ring"></div>
+              <div class="relative space-y-6">
+                <div class="floating-card glass-panel p-6">
+                  <p class="text-sm uppercase tracking-[0.35em] text-white/60">Live Metrics</p>
+                  <div class="mt-3 space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-white/70">流通供給量</span>
+                      <span class="font-semibold text-emerald-300">1,250,430 SCT</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-white/70">担保率</span>
+                      <span class="font-semibold text-cyan-200">189%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-white/70">ステーキング APY</span>
+                      <span class="font-semibold text-indigo-200">6.2%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="glass-panel p-6 space-y-4">
+                  <p class="text-sm font-medium text-white/70">コンプライアンス戦略エンジン</p>
+                  <ul class="space-y-3 text-sm text-white/60">
+                    <li class="flex items-start gap-3">
+                      <span class="mt-0.5 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300"></span>
+                      <span>多次元KYC/AMLスコアリング</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <span class="mt-0.5 inline-flex h-2.5 w-2.5 rounded-full bg-cyan-300"></span>
+                      <span>準備資産のリアルタイム照合</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <span class="mt-0.5 inline-flex h-2.5 w-2.5 rounded-full bg-indigo-300"></span>
+                      <span>クロスチェーンブリッジの動的制限</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="glass-panel p-5 flex items-center gap-4">
+                  <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20 text-indigo-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-white">ローンチサポート</p>
+                    <p class="text-xs text-white/60">オペレーションテンプレートと法務チェックリストを提供</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="fade-section" data-section style="--delay: 0.1s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">主要機能</span>
+            <h2 class="text-3xl font-semibold md:text-4xl">発行からガバナンスまでを一つのダッシュボードで管理</h2>
+            <p class="text-base text-white/70">モジュール同士を自由に組み合わせ、規模拡大にあわせて拡張可能な運用スタックを構築できます。</p>
+          </div>
+          <div class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.05s">
+              <div class="flex items-center gap-3 text-indigo-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-500/20">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">柔軟な発行フロー</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">可視化されたルールで担保閾値・発行上限・承認フローを定義し、スムーズなローンチと段階的リリースを両立します。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip bg-indigo-500/15 text-indigo-100">ルールエンジン</span>
+                <span class="chip">ロール管理</span>
+              </div>
+            </article>
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.1s">
+              <div class="flex items-center gap-3 text-cyan-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-500/20">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h11M9 21V3m3 18l9-9-9-9" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">クロスチェーン流動性</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">主要チェーンとLayer2のブリッジアダプタを搭載し、手数料と流動性重みを自動調整して最適なネットワークへ配分。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip bg-cyan-500/15 text-cyan-100">7+ チェーン</span>
+                <span class="chip">リアルタイム監視</span>
+              </div>
+            </article>
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.15s">
+              <div class="flex items-center gap-3 text-emerald-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/20">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">監査 & コンプライアンス</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">モニタリングログ、資金移動、監査レポートを自動生成し、ワンクリックでエクスポート。監督当局との共有も容易です。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip bg-emerald-500/20 text-emerald-100">自動レポート</span>
+                <span class="chip">リスクアラート</span>
+              </div>
+            </article>
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.2s">
+              <div class="flex items-center gap-3 text-fuchsia-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fuchsia-500/25">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21l-1.47-3.92M9.75 17h4.5M9.75 17L12 3.75 14.25 17m0 0H18l-1.47 3.92L15 17" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">ガバナンスダッシュボード</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">DAOテンプレートをもとに投票パラメータを設定し、オンチェーン実行スクリプトと連携。変更履歴を常に可視化します。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip">オンチェーン実行</span>
+                <span class="chip bg-fuchsia-500/20 text-fuchsia-100">リアルタイム可視化</span>
+              </div>
+            </article>
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.25s">
+              <div class="flex items-center gap-3 text-orange-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-500/25">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7l9-4 9 4-9 4-9-4zm0 6l9 4 9-4m-9 4v6" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">APIとSDK</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">JavaScript、Rust、Python SDKで主要機能をカバー。ウォレット、取引所、加盟店など多様なプロダクトに組み込み可能です。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip">API</span>
+                <span class="chip bg-orange-500/20 text-orange-100">SDK</span>
+              </div>
+            </article>
+            <article class="feature-card reveal-card" data-animate style="--delay: 0.3s">
+              <div class="flex items-center gap-3 text-sky-200">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-500/25">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </span>
+                <h3 class="text-xl font-semibold text-white">自動ロールバック</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-white/70">異常検知時は影響範囲のアドレスを即時凍結し、バックアップ手順と通知を自動実行。ビジネス継続性を確保します。</p>
+              <div class="flex items-center gap-2 text-xs text-white/50">
+                <span class="chip bg-sky-500/20 text-sky-100">冗長構成</span>
+                <span class="chip">リスク制御</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="fade-section" data-section style="--delay: 0.12s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.04] p-10">
+            <div class="absolute -left-24 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-indigo-500/25 blur-3xl"></div>
+            <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+              <div class="space-y-6">
+                <span class="badge-soft">アーキテクチャ</span>
+                <h2 class="text-3xl font-semibold md:text-4xl">三層構造で性能・透明性・安全性を両立</h2>
+                <p class="text-base text-white/70">StableCoinは「アクセス層」「サービス層」「オンチェーン層」で構成され、柔軟な拡張性と堅牢なセキュリティを同時に実現します。</p>
+                <div class="grid gap-5 text-sm text-white/70">
+                  <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.05s">
+                    <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-white">1</div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-white">アクセス層</h3>
+                      <p class="mt-1">管理コンソール、APIゲートウェイ、SDKを統合。認証・権限・操作ログを一元化します。</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.1s">
+                    <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-white">2</div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-white">サービス層</h3>
+                      <p class="mt-1">発行ルールエンジン、清算・リスク管理、モニタリング機能で可用性とコンプライアンスを担保。</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.15s">
+                    <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-white">3</div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-white">オンチェーン層</h3>
+                      <p class="mt-1">DAOガバナンス契約とクロスチェーン決済テンプレートを配置し、外部ブリッジやオラクル連携を容易にします。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="glass-panel relative overflow-hidden p-8">
+                <div class="absolute -top-28 right-0 h-56 w-56 rounded-full bg-indigo-400/35 blur-3xl"></div>
+                <div class="relative space-y-6 text-sm text-white/70">
+                  <h3 class="text-lg font-semibold text-white">運用ベストプラクティス</h3>
+                  <ul class="space-y-3">
+                    <li class="flex items-start gap-3">
+                      <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-indigo-300"></span>
+                      <span>発行・風控・清算サービスを独立コンテナ化し、メッセージバスで連携。</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-cyan-300"></span>
+                      <span>Vaultなどで鍵を管理し、多重署名で戦略実行を保護。</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300"></span>
+                      <span>Prometheus + Grafanaでリアルタイム指標を監視し、自動アラートを設定。</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-purple-300"></span>
+                      <span>ブルーグリーンデプロイとスマートコントラクト監査でアップデートの安全性を確保。</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="partners" class="fade-section" data-section style="--delay: 0.14s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">エコシステム</span>
+            <h2 class="text-3xl font-semibold md:text-4xl">主要チェーン・金融機関・規制機関と連携</h2>
+            <p class="text-base text-white/70">モジュール式コネクタでクロスチェーンブリッジ、清算銀行、決済ゲートウェイを素早く統合し、エコシステムを拡張します。</p>
+          </div>
+          <div class="glass-panel mt-14 p-6 md:p-8">
+            <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5 items-center">
+              <div class="flex justify-center grayscale opacity-60 transition duration-300 hover:opacity-100 hover:grayscale-0 hover:scale-105">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5sWUmHlc-58YdWp24i8ZNNwK7ZvLVgHz0M_y291GsZav89-_4OE1Z6JhxYAZB7Kp1v6iu4YrNwGEZhNJouDlzMQ_2m-EYMOlNJyPpb57E7W2kUPek-VdSiUy1KBsJkTSsn5Tx489MI_y52ARIiHxGhZEhhmo-Ov0Xm4pOt-4ZdzuhrXzK3CIx819TOzFoEntm84ihh0-MO-HJ__WnrAWYtX_RyOPZXc5ETWX1h6hq4Ow0oOSddn8D005UgxlUWbZ1-m-lIiSvlmI" alt="Partner A" class="w-28 sm:w-32" />
+              </div>
+              <div class="flex justify-center grayscale opacity-60 transition duration-300 hover:opacity-100 hover:grayscale-0 hover:scale-105">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6IaC0g_fxTzf74tvA-QnaFcBM1t6jf1SFDCc_3atWwudp9rmcdC7VDSWHhZd1_I5Cx49G4INbTUyTYtMtweYDvFsuOhNzRcu-pyHPKa42LXDppr8DB7YnD-We3JsoPS7mgiih42vgSlqYVgROgwq78jxS4ycRdyydFz_F8fCyw5bff3ncCyxUT2aI9cTq9SR83zMA_NS3oe1yN4bDe3PSWbkmHJCE1xBEsHeTTWNa3XNBVQL8IBvte6BSR_6ORE-Eu5XR_R9QLI" alt="Partner B" class="w-28 sm:w-32" />
+              </div>
+              <div class="flex justify-center grayscale opacity-60 transition duration-300 hover:opacity-100 hover:grayscale-0 hover:scale-105">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEU77YFnV7LTTe3QIVqB1XWwz5p1LiAoA6so7HW6ponnRYmNlFohboR3H9RanvExWXFkyN5tVDNR4Lq7_emdVOSG1_jRYVE77Go7CASS6pm5135uLHIfKernV_Noauaby5wDrPvkWUOPSsgUC-M66KMzpbJmZCTCeQzLWOxmYzqHQaYJSQQKM286e6X0LRR5pRM5T2llnUGvnlmDlni1iDjYXsMkNkh4fn4l_vJopEPIPO6PEj1w5EeFS9v3DGyUwrnk8i6Z4ZYD8" alt="Partner C" class="w-28 sm:w-32" />
+              </div>
+              <div class="flex justify-center grayscale opacity-60 transition duration-300 hover:opacity-100 hover:grayscale-0 hover:scale-105">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB12VulTqQRG91KMX7mo4ytHN8yL9zpxOLkzg9LmqKnZxDUjLSI8nDgOnyY5acPDksRtzmrF6UfJblkkjZznq_E0EQmow2jDnVNR08NG0kHnN-TL6v8EoW0JvUiekWj9T8U-tXskY03qPOjsxQpg5B5rWUEHe4HVdhm-ZycRxBAX3iGLwj9l5bwobPc3-_M4Wa_3LJ6VnTROhvPT5RQ8LWV5GMhHVNiSfMWSkkr_BnYJ9jjd8xc1fZjUnwwKWBKs8ryaVmT4bsMGZU" alt="Partner D" class="w-28 sm:w-32" />
+              </div>
+              <div class="flex justify-center grayscale opacity-60 transition duration-300 hover:opacity-100 hover:grayscale-0 hover:scale-105">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLe6QCjr9Kf-73i3FfeWd97glMyqC5s_pfBnuM-0Nj-Z4e8aGLKc_ZH_djJ4DKBUStaDzenCbifhO2TqEQeSfPTsyYSTfy7YQsd-P026aZWmXJBs5B9nwcPWS81Ga_lNVfuoENpolaQZyVkgjrqGGhPUMysir2jgfsfWPLeXKCNbC3uvg1pKmRojSTsoXtP_GorVlNjK1U91aSFGSEpf0u4uqHyVxsWSO6Sgq7zPxnzEtocexc8WbEjl_rHvHnmT-8WGyhOndQUbo" alt="Partner E" class="w-28 sm:w-32" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="fade-section" data-section style="--delay: 0.16s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">FAQ</span>
+            <h2 class="text-3xl font-semibold md:text-4xl">導入前によくある質問</h2>
+            <p class="text-base text-white/70">ステーブルコインを導入する際に最も多い懸念点をまとめ、評価と意思決定を素早く行えるようにしています。</p>
+          </div>
+          <div class="mt-12 space-y-5">
+            <details class="group glass-panel p-6 transition hover:border-indigo-400/40">
+              <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-white">
+                価値の安定性はどのように担保されていますか？
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/50 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="mt-4 text-sm leading-relaxed text-white/70">リアルタイムでオンチェーン化された準備資産と外部オラクルによる価格検証、自動清算ロジックにより担保率を常に目標以上に維持します。</p>
+            </details>
+            <details class="group glass-panel p-6 transition hover:border-indigo-400/40">
+              <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-white">
+                各国の規制に適合できますか？
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/50 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="mt-4 text-sm leading-relaxed text-white/70">リージョン別KYCポリシーとテンプレートを内蔵し、監督当局への報告資料も自動生成。法務チームとの連携にも対応します。</p>
+            </details>
+            <details class="group glass-panel p-6 transition hover:border-indigo-400/40">
+              <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-white">
+                運用中のリスクやインシデントにはどう対応しますか？
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/50 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="mt-4 text-sm leading-relaxed text-white/70">集中監視パネルと自動アラートにより、異常検知時はアドレス凍結、ロールバック、担当者への通知が即時に実行されます。</p>
+            </details>
+            <details class="group glass-panel p-6 transition hover:border-indigo-400/40">
+              <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-white">
+                どのようなデプロイ形態に対応していますか？
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/50 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </summary>
+              <p class="mt-4 text-sm leading-relaxed text-white/70">SaaS、プライベートクラウド、ハイブリッドクラウドの3方式を提供し、データ所在や規制要件に合わせた柔軟な構成が可能です。</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="fade-section" data-section style="--delay: 0.18s">
+        <div class="mx-auto max-w-5xl px-6 pb-24">
+          <div class="glass-panel relative overflow-hidden p-12 text-center">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/25 via-indigo-400/10 to-transparent"></div>
+            <div class="relative space-y-6">
+              <span class="badge-soft mx-auto">今すぐ体験</span>
+              <h2 class="text-3xl font-semibold md:text-4xl">30分でサンドボックス環境を構築</h2>
+              <p class="mx-auto max-w-2xl text-base text-white/70">ニーズを送信いただければ、1営業日以内にテクニカルアドバイザーが連絡し、アーキテクチャと移行プランを提案します。</p>
+              <div class="flex flex-col items-center justify-center gap-3 text-sm text-white/70 md:flex-row">
+                <div class="chip bg-white/15 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 12a4 4 0 01-8 0m8 0v-3a4 4 0 10-8 0v3m8 0v2a4 4 0 11-8 0v-2" />
+                  </svg>
+                  企業向けホワイトリスト
+                </div>
+                <div class="chip bg-white/15 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  グローバルタイムゾーン対応
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <a href="mailto:bd@stablecoin.io" class="cta-button inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold">営業チームに連絡</a>
+                <a href="https://calendar.app.google/zS86Y9J8y6g2QbQw7" class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 text-base font-semibold text-white/80 transition hover:border-white/20 hover:text-white">テクニカル相談を予約</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relative z-10 border-t border-white/10 bg-black/30">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col gap-2 text-sm text-white/60">
+          <span class="font-semibold text-white">StableCoin Labs</span>
+          <span>Copyright © 2025 — All rights reserved.</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 text-xs text-white/50">
+          <a href="#features" class="hover:text-white">製品機能</a>
+          <span class="hidden h-1 w-1 rounded-full bg-white/30 sm:flex"></span>
+          <a href="#architecture" class="hover:text-white">技術構成</a>
+          <span class="hidden h-1 w-1 rounded-full bg-white/30 sm:flex"></span>
+          <a href="#faq" class="hover:text-white">ヘルプセンター</a>
+          <span class="hidden h-1 w-1 rounded-full bg-white/30 sm:flex"></span>
+          <a href="mailto:security@stablecoin.io" class="hover:text-white">セキュリティ連絡</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('[data-section]');
+    const revealCards = document.querySelectorAll('[data-animate]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.25
+    });
+
+    sections.forEach((section) => observer.observe(section));
+    revealCards.forEach((card) => observer.observe(card));
+
+    const parallaxNodes = document.querySelectorAll('.particle');
+    window.addEventListener('scroll', () => {
+      const offset = window.scrollY * 0.06;
+      parallaxNodes.forEach((node) => {
+        const speed = parseFloat(node.dataset.speed || '1');
+        node.style.transform = `translate3d(0, ${offset * speed}px, 0)`;
+      });
+    });
+  </script>
+</body>
+</html>
