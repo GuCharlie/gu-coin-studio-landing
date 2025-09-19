@@ -3,15 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>StableCoin — 信頼できるステーブルコイン発行プラットフォーム</title>
+  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行プラットフォーム</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
   <style type="text/tailwindcss">
     :root {
-      --primary-color: #6366f1;
-      --accent-color: #22d3ee;
+      /* Enhanced color system with CSS custom properties */
+      --primary-hue: 240;
+      --primary-saturation: 75%;
+      --primary-lightness: 65%;
+      --accent-hue: 185;
+      --accent-saturation: 85%;
+      --accent-lightness: 60%;
+      
+      /* Dynamic theme variables for dark mode */
+      --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+      --accent-color: hsl(var(--accent-hue), var(--accent-saturation), var(--accent-lightness));
+      
+      /* Dark theme background and text colors */
+      --bg-primary: hsl(var(--primary-hue), 15%, 8%);
+      --bg-secondary: hsl(var(--primary-hue), 12%, 12%);
+      --text-primary: hsl(var(--primary-hue), 15%, 90%);
+      --text-secondary: hsl(var(--primary-hue), 10%, 70%);
+      --text-muted: hsl(var(--primary-hue), 8%, 50%);
+      
+      /* Animation timing and easing */
+      --transition-fast: 0.2s;
+      --transition-medium: 0.4s;
+      --transition-slow: 0.8s;
+      --transition-extra-slow: 1.2s;
+      
+      /* Modern easing functions */
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+      
+      /* Spacing and sizing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      
+      /* Border radius */
+      --radius-sm: 0.5rem;
+      --radius-md: 1rem;
+      --radius-lg: 1.5rem;
+      --radius-xl: 2rem;
+      
+      /* Dark theme shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+      --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
     }
 
     body {
@@ -22,6 +71,40 @@
     .bg-grid {
       background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.1) 1px, transparent 0);
       background-size: 56px 56px;
+    }
+
+    /* Enhanced keyframe animations for dark theme */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes aurora {
@@ -56,22 +139,137 @@
       }
     }
 
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0, 0, 0);
+      }
+      40%, 43% {
+        transform: translate3d(0, -8px, 0);
+      }
+      70% {
+        transform: translate3d(0, -4px, 0);
+      }
+      90% {
+        transform: translate3d(0, -2px, 0);
+      }
+    }
+
+    @keyframes typewriter {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      0%, 50% {
+        opacity: 1;
+      }
+      51%, 100% {
+        opacity: 0;
+      }
+    }
+
+    /* Modern animation utilities for dark theme */
+    .animate-fade-in {
+      animation: fadeIn var(--transition-slow) var(--ease-out-expo) forwards;
+    }
+
+    .animate-slide-up {
+      animation: slideUp var(--transition-slow) var(--ease-out-expo) forwards;
+    }
+
+    .animate-scale-in {
+      animation: scaleIn var(--transition-medium) var(--ease-out-back) forwards;
+    }
+
+    .animate-float {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .animate-pulse-soft {
+      animation: pulseSoft 4s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    /* Enhanced scroll-triggered animations */
     .fade-section {
-      @apply opacity-0 translate-y-12 transition-all duration-700 ease-out;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all var(--transition-slow) var(--ease-out-expo);
       transition-delay: var(--delay, 0s);
     }
 
     .fade-section.is-visible {
-      @apply opacity-100 translate-y-0;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .reveal-card {
-      @apply opacity-0 translate-y-6 transition-transform transition-opacity duration-700 ease-out;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: all var(--transition-slow) var(--ease-out-expo);
       transition-delay: var(--delay, 0s);
     }
 
     .reveal-card.is-visible {
-      @apply opacity-100 translate-y-0;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Intersection Observer triggers */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger animation delays */
+    .stagger-1 { --delay: 0.1s; }
+    .stagger-2 { --delay: 0.2s; }
+    .stagger-3 { --delay: 0.3s; }
+    .stagger-4 { --delay: 0.4s; }
+    .stagger-5 { --delay: 0.5s; }
+    .stagger-6 { --delay: 0.6s; }
+
+    /* Motion sensitivity support */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      
+      .animate-float,
+      .animate-pulse-soft,
+      .animate-shimmer {
+        animation: none !important;
+      }
     }
 
     @layer components {
@@ -168,9 +366,9 @@
     <header class="relative z-20">
       <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 lg:py-8">
         <a href="#hero" class="flex items-center gap-3 text-white">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 shadow-lg shadow-indigo-500/30 backdrop-blur-lg text-lg font-semibold">SC</span>
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 shadow-lg shadow-indigo-500/30 backdrop-blur-lg text-lg font-semibold">GU</span>
           <div class="flex flex-col leading-tight">
-            <span class="text-base font-semibold tracking-tight">StableCoin</span>
+            <span class="text-base font-semibold tracking-tight">G.U. CoinStudio</span>
             <span class="text-[11px] uppercase tracking-[0.42em] text-white/50">Issuance Suite</span>
           </div>
         </a>
@@ -208,7 +406,7 @@
                 <span class="bg-gradient-to-r from-indigo-300 via-indigo-200 to-cyan-200 bg-clip-text text-transparent">次世代ステーブルコイン運用基盤</span>
               </h1>
               <p class="text-base leading-relaxed text-white/70 md:max-w-xl">
-                StableCoinは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるための包括的なプラットフォームです。
+                G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるための包括的なプラットフォームです。
               </p>
             </div>
             <div class="flex flex-wrap items-center gap-4">
@@ -408,7 +606,7 @@
               <div class="space-y-6">
                 <span class="badge-soft">アーキテクチャ</span>
                 <h2 class="text-3xl font-semibold md:text-4xl">三層構造で性能・透明性・安全性を両立</h2>
-                <p class="text-base text-white/70">StableCoinは「アクセス層」「サービス層」「オンチェーン層」で構成され、柔軟な拡張性と堅牢なセキュリティを同時に実現します。</p>
+                <p class="text-base text-white/70">G.U. CoinStudioは「アクセス層」「サービス層」「オンチェーン層」で構成され、柔軟な拡張性と堅牢なセキュリティを同時に実現します。</p>
                 <div class="grid gap-5 text-sm text-white/70">
                   <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.05s">
                     <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-white">1</div>
@@ -574,7 +772,7 @@
     <footer class="relative z-10 border-t border-white/10 bg-black/30">
       <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
         <div class="flex flex-col gap-2 text-sm text-white/60">
-          <span class="font-semibold text-white">StableCoin Labs</span>
+          <span class="font-semibold text-white">G.U. CoinStudio Labs</span>
           <span>Copyright © 2025 — All rights reserved.</span>
         </div>
         <div class="flex flex-wrap items-center gap-4 text-xs text-white/50">
@@ -614,6 +812,183 @@
         const speed = parseFloat(node.dataset.speed || '1');
         node.style.transform = `translate3d(0, ${offset * speed}px, 0)`;
       });
+    });
+
+    // Modern Animation System with Intersection Observer
+    class AnimationController {
+      constructor() {
+        this.observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+        
+        this.init();
+      }
+
+      init() {
+        this.setupIntersectionObserver();
+        this.setupCounterAnimations();
+        this.setupParallaxEffects();
+        this.setupPerformanceMonitoring();
+      }
+
+      setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              
+              // Trigger counter animations for stat cards
+              if (entry.target.classList.contains('stat-card')) {
+                this.animateCounters(entry.target);
+              }
+              
+              // Add stagger delays for grouped elements
+              if (entry.target.dataset.stagger) {
+                this.addStaggerAnimation(entry.target);
+              }
+            }
+          });
+        }, this.observerOptions);
+
+        // Observe all animation targets
+        document.querySelectorAll('.fade-section, .reveal-card, .reveal-on-scroll').forEach(el => {
+          observer.observe(el);
+        });
+      }
+
+      setupCounterAnimations() {
+        // Counter animation function
+        this.animateCounter = (element, target, duration = 2000) => {
+          const start = 0;
+          const increment = target / (duration / 16);
+          let current = start;
+          
+          const timer = setInterval(() => {
+            current += increment;
+            const value = Math.floor(current);
+            
+            if (element.dataset.suffix) {
+              element.textContent = value + element.dataset.suffix;
+            } else {
+              element.textContent = value;
+            }
+            
+            if (current >= target) {
+              element.textContent = target + (element.dataset.suffix || '');
+              clearInterval(timer);
+            }
+          }, 16);
+        };
+      }
+
+      animateCounters(statCard) {
+        const counterElement = statCard.querySelector('.text-3xl');
+        if (counterElement && !counterElement.dataset.animated) {
+          const text = counterElement.textContent.trim();
+          const match = text.match(/(\d+)/);
+          
+          if (match) {
+            const number = parseInt(match[1]);
+            const suffix = text.replace(match[1], '').trim();
+            
+            counterElement.dataset.suffix = suffix;
+            counterElement.dataset.animated = 'true';
+            
+            this.animateCounter(counterElement, number, 2000);
+          }
+        }
+      }
+
+      addStaggerAnimation(element) {
+        const children = element.querySelectorAll('[data-stagger-child]');
+        children.forEach((child, index) => {
+          child.style.setProperty('--delay', `${index * 0.1}s`);
+          child.classList.add('reveal-on-scroll');
+        });
+      }
+
+      setupParallaxEffects() {
+        let ticking = false;
+        
+        const updateParallax = () => {
+          const scrolled = window.pageYOffset;
+          const parallaxElements = document.querySelectorAll('[data-parallax]');
+          
+          parallaxElements.forEach(element => {
+            const speed = element.dataset.parallax || 0.5;
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translateY(${yPos}px)`;
+          });
+          
+          ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        });
+      }
+
+      setupPerformanceMonitoring() {
+        // Monitor animation performance
+        if ('PerformanceObserver' in window) {
+          const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.duration > 16.67) { // > 60fps threshold
+                console.warn('Long animation frame detected:', entry.duration);
+              }
+            }
+          });
+          
+          try {
+            observer.observe({entryTypes: ['measure']});
+          } catch (e) {
+            // Fallback for browsers that don't support all entry types
+            console.log('Performance monitoring not fully supported');
+          }
+        }
+      }
+    }
+
+    // Initialize animation system when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        new AnimationController();
+      });
+    } else {
+      new AnimationController();
+    }
+
+    // Enhanced smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add loading state management
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      
+      // Trigger initial animations
+      setTimeout(() => {
+        document.querySelectorAll('.fade-section').forEach((el, index) => {
+          setTimeout(() => {
+            el.classList.add('is-visible');
+          }, index * 100);
+        });
+      }, 100);
     });
   </script>
 </body>
