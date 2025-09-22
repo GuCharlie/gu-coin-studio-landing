@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行プラットフォーム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <style>
+    :root {
+      /* Enhanced color system with CSS custom properties */
+      --primary-hue: 220;
+      --primary-saturation: 70%;
+      --primary-lightness: 50%;
+      --accent-hue: 195;
+      --accent-saturation: 85%;
+      --accent-lightness: 55%;
+      
+      /* Light theme colors */
+      --bg-primary-light: hsl(var(--primary-hue), 10%, 98%);
+      --bg-secondary-light: hsl(var(--primary-hue), 15%, 96%);
+      --text-primary-light: hsl(var(--primary-hue), 15%, 15%);
+      --text-secondary-light: hsl(var(--primary-hue), 10%, 45%);
+      --text-muted-light: hsl(var(--primary-hue), 8%, 65%);
+      
+      /* Dark theme colors */
+      --bg-primary-dark: hsl(var(--primary-hue), 15%, 8%);
+      --bg-secondary-dark: hsl(var(--primary-hue), 12%, 12%);
+      --text-primary-dark: hsl(var(--primary-hue), 15%, 90%);
+      --text-secondary-dark: hsl(var(--primary-hue), 10%, 70%);
+      --text-muted-dark: hsl(var(--primary-hue), 8%, 50%);
+      
+      /* Dynamic theme variables - default to light */
+      --bg-primary: var(--bg-primary-light);
+      --bg-secondary: var(--bg-secondary-light);
+      --text-primary: var(--text-primary-light);
+      --text-secondary: var(--text-secondary-light);
+      --text-muted: var(--text-muted-light);
+      
+      /* Theme-specific colors */
+      --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+      --accent-color: hsl(var(--accent-hue), var(--accent-saturation), var(--accent-lightness));
+      
+      /* Animation timing and easing */
+      --transition-fast: 0.2s;
+      --transition-medium: 0.4s;
+      --transition-slow: 0.8s;
+      --transition-extra-slow: 1.2s;
+      
+      /* Modern easing functions */
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+      
+      /* Theme transition properties */
+      --theme-transition: background-color var(--transition-medium) var(--ease-out-expo),
+                         color var(--transition-medium) var(--ease-out-expo),
+                         border-color var(--transition-medium) var(--ease-out-expo),
+                         box-shadow var(--transition-medium) var(--ease-out-expo);
+    }
+  </style>
+</head><body class
+="scroll-smooth antialiased" style="font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui; background-color: var(--bg-primary); color: var(--text-primary);">
+  <style>
+    /* Dark theme overrides */
+    [data-theme="dark"] {
+      --bg-primary: var(--bg-primary-dark);
+      --bg-secondary: var(--bg-secondary-dark);
+      --text-primary: var(--text-primary-dark);
+      --text-secondary: var(--text-secondary-dark);
+      --text-muted: var(--text-muted-dark);
+      --primary-lightness: 65%;
+      --accent-lightness: 60%;
+    }
+
+    /* Global theme transition */
+    *, *::before, *::after {
+      transition: var(--theme-transition);
+    }
+
+    /* Enhanced keyframe animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-12px) scale(1.02); }
+    }
+
+    @keyframes auroraRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes driftGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+      40%, 43% { transform: translate3d(0, -8px, 0); }
+      70% { transform: translate3d(0, -4px, 0); }
+      90% { transform: translate3d(0, -2px, 0); }
+    }
+
+    /* Theme Toggle Button Styles */
+    .theme-toggle-btn {
+      position: relative; width: 64px; height: 32px; border-radius: 16px;
+      border: none; cursor: pointer; outline: none; transition: var(--theme-transition);
+    }
+
+    .theme-toggle-track {
+      width: 100%; height: 100%; border-radius: 16px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      position: relative; transition: var(--theme-transition);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-toggle-track.dark {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-toggle-thumb {
+      position: absolute; top: 2px; left: 2px; width: 28px; height: 28px;
+      border-radius: 50%; background: white;
+      transition: transform var(--transition-medium) var(--ease-out-expo),
+                  background-color var(--transition-medium) var(--ease-out-expo);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-toggle-thumb.dark {
+      transform: translateX(32px); background: #1e293b;
+    }
+
+    .theme-icon {
+      width: 16px; height: 16px;
+      transition: opacity var(--transition-fast) var(--ease-out-expo);
+    }
+
+    .sun-icon { color: #f59e0b; opacity: 1; }
+    .moon-icon { color: #e2e8f0; opacity: 0; position: absolute; }
+    .theme-toggle-thumb.dark .sun-icon { opacity: 0; }
+    .theme-toggle-thumb.dark .moon-icon { opacity: 1; }
+
+    /* Theme-aware grid background */
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, 
+        hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) * 0.8), 0.12) 1px, 
+        transparent 0);
+      background-size: 46px 46px;
+    }
+
+    [data-theme="dark"] .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, 
+        hsl(var(--primary-hue), 30%, 70%, 0.1) 1px, transparent 0);
+      background-size: 56px 56px;
+    }
+  </style>  <style
+>
+    /* Component Styles - matching cs-light.html exactly */
+
+    /* Matching cs-light.html component styles */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgb(226, 232, 240);
+      background: white;
+      padding: 0.25rem 0.875rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgb(100, 116, 139);
+    }
+
+    [data-theme="dark"] .chip {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgb(191, 219, 254);
+      background: rgb(239, 246, 255);
+      padding: 0.25rem 1rem;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgb(37, 99, 235);
+    }
+
+    [data-theme="dark"] .badge-soft {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: rgb(165, 180, 252);
+    }
+
+    .cta-button {
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(120deg, #2563eb, #3b82f6, #0ea5e9);
+      box-shadow: 0 18px 45px -20px rgba(37, 99, 235, 0.55);
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-button:hover::after {
+      opacity: 1;
+    }
+
+    .secondary-button {
+      background: rgba(255, 255, 255, 1); border: 1px solid rgba(148, 163, 184, 0.2);
+      color: rgba(100, 116, 139, 1); border-radius: 9999px; padding: 0.75rem 1.5rem;
+      font-weight: 600; text-decoration: none; display: inline-flex;
+      align-items: center; gap: 0.5rem; transition: var(--theme-transition);
+    }
+
+    [data-theme="dark"] .secondary-button {
+      background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .secondary-button:hover { opacity: 1; border-color: rgba(148, 163, 184, 0.3); }
+    [data-theme="dark"] .secondary-button:hover { border-color: rgba(255, 255, 255, 0.2); }
+
+    .mobile-menu-btn {
+      background: rgba(255, 255, 255, 1); border: 1px solid rgba(148, 163, 184, 0.2);
+      color: rgba(100, 116, 139, 1); border-radius: 1rem; width: 2.5rem; height: 2.5rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: var(--theme-transition);
+    }
+
+    [data-theme="dark"] .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .stat-card {
+      border-radius: 1.5rem;
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      background: white;
+      box-shadow: 0 20px 45px -30px rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(8px);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-height: 160px;
+    }
+
+    [data-theme="dark"] .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 80px -25px rgba(99, 102, 241, 0.35);
+    }
+  </style>  <style>
+
+    .feature-card {
+      background: rgba(255, 255, 255, 1); border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 2rem; padding: 2rem; display: flex; flex-direction: column;
+      gap: 1.25rem; transition: all var(--transition-medium) var(--ease-out-expo);
+      box-shadow: 0 20px 45px -30px rgba(15, 23, 42, 0.45); backdrop-filter: blur(8px);
+    }
+
+    [data-theme="dark"] .feature-card {
+      background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 80px -25px rgba(99, 102, 241, 0.35);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 35px 75px -35px rgba(37, 99, 235, 0.55);
+    }
+
+    [data-theme="dark"] .feature-card:hover {
+      box-shadow: 0 35px 75px -35px rgba(99, 102, 241, 0.55);
+    }
+
+    .feature-icon {
+      width: 2.75rem; height: 2.75rem; border-radius: 1rem;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    /* Animation utilities */
+    .fade-section {
+      opacity: 0; transform: translateY(30px);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .fade-section.is-visible { opacity: 1; transform: translateY(0); }
+
+    .reveal-card {
+      opacity: 0; transform: translateY(20px) scale(0.95);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal-card.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Background effects - slower animations */
+    .aurora-layer {
+      position: absolute; inset: -30% -35% auto -35%; height: 120vh; pointer-events: none;
+      background: conic-gradient(from 90deg, rgba(37, 99, 235, 0.22), rgba(14, 165, 233, 0.18), 
+                                 rgba(59, 130, 246, 0.24), rgba(13, 148, 136, 0.18));
+      mix-blend-mode: screen; opacity: 0.45; filter: blur(120px);
+      animation: auroraRotate 120s linear infinite;
+    }
+
+    [data-theme="dark"] .aurora-layer {
+      background: conic-gradient(from 90deg, rgba(99, 102, 241, 0.35), rgba(34, 211, 238, 0.25), 
+                                 rgba(59, 130, 246, 0.3), rgba(13, 148, 136, 0.25));
+    }
+
+    .gradient-stream {
+      position: absolute; inset: 0;
+      background: linear-gradient(130deg, rgba(37, 99, 235, 0.08), rgba(14, 165, 233, 0.14), rgba(255, 255, 255, 0));
+      background-size: 220% 220%; opacity: 0.65; animation: driftGradient 48s ease-in-out infinite;
+      mix-blend-mode: multiply;
+    }
+
+    [data-theme="dark"] .gradient-stream {
+      background: linear-gradient(130deg, rgba(99, 102, 241, 0.15), rgba(34, 211, 238, 0.18), rgba(0, 0, 0, 0));
+      mix-blend-mode: screen;
+    }
+
+    .shape {
+      position: absolute; border-radius: 9999px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.16), transparent 65%);
+      will-change: transform;
+    }
+
+    [data-theme="dark"] .shape {
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.25), transparent 65%);
+    }
+
+    /* Hero preview styles */
+    .hero-preview {
+      position: relative; overflow: hidden; border-radius: 2.25rem;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: linear-gradient(180deg, rgba(241, 245, 249, 0.88), rgba(226, 232, 240, 0.6));
+      box-shadow: 0 40px 60px -35px rgba(37, 99, 235, 0.35);
+    }
+
+    [data-theme="dark"] .hero-preview {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(30, 41, 59, 0.6));
+      box-shadow: 0 40px 60px -35px rgba(99, 102, 241, 0.35);
+    }
+
+    .hero-preview::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent 70%);
+      opacity: 0.9;
+    }
+
+    .hero-preview::after {
+      content: ''; position: absolute; inset: 18px; border-radius: 28px;
+      border: 1px dashed rgba(100, 116, 139, 0.35);
+    }
+
+    .preview-content {
+      position: relative; z-index: 1; padding: 2rem 2.25rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+
+    .preview-window {
+      border-radius: 1.375rem;
+      background: linear-gradient(180deg, rgba(248, 250, 252, 1), rgba(226, 232, 240, 0.85));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      position: relative; overflow: hidden;
+    }
+
+    [data-theme="dark"] .preview-window {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 1), rgba(51, 65, 85, 0.85));
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-window::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 44px;
+      background: linear-gradient(to right, rgba(148, 163, 184, 0.12), rgba(148, 163, 184, 0.05));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .preview-gradient {
+      position: absolute; inset: -40% -20% auto 0; height: 140%;
+      background: conic-gradient(from 180deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.18), rgba(13, 148, 136, 0.18));
+      mix-blend-mode: screen; animation: auroraRotate 72s linear infinite;
+    }
+
+    .preview-placeholder {
+      position: relative; z-index: 1; display: flex; align-items: center; justify-content: center;
+      height: 100%;
+      background: repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.12) 0px, rgba(148, 163, 184, 0.12) 18px, transparent 18px, transparent 36px);
+    }
+
+    [data-theme="dark"] .preview-placeholder {
+      background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 18px, transparent 18px, transparent 36px);
+    }
+
+    .floating-note {
+      position: absolute; right: 12%; bottom: -32px; display: inline-flex; align-items: center;
+      gap: 10px; border-radius: 1rem; border: 1px solid rgba(37, 99, 235, 0.2);
+      background: white; box-shadow: 0 24px 50px -28px rgba(37, 99, 235, 0.45);
+      padding: 14px 18px; animation: floatSlow 18s ease-in-out infinite;
+    }
+
+    [data-theme="dark"] .floating-note {
+      background: rgba(15, 23, 42, 0.9); border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 24px 50px -28px rgba(99, 102, 241, 0.45);
+    }
+
+    /* Image Carousel Styles */
+    .image-carousel:hover .carousel-nav {
+      opacity: 1;
+    }
+
+    .carousel-indicator.active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.2);
+    }
+
+    .carousel-track {
+      transform: translateX(0%);
+    }
+
+    /* Language Switcher Styles */
+    #language-menu {
+      z-index: 50;
+    }
+
+    [data-theme="dark"] #language-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    [data-theme="dark"] #language-menu {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] .lang-option {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    [data-theme="dark"] .lang-option:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* FAQ Accordion */
+    .faq-item { border-radius: 1.5rem; overflow: hidden; transition: var(--theme-transition); }
+    .faq-question { cursor: pointer; padding: 1.5rem; font-weight: 600; font-size: 1.125rem; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height var(--transition-medium) var(--ease-out-expo); }
+    .faq-answer.open { max-height: 200px; }
+    .faq-content { padding: 0 1.5rem 1.5rem; opacity: 0.7; line-height: 1.6; }
+
+    /* Motion sensitivity support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+      }
+    }
+
+    /* Utility classes */
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .gap-8 { gap: 2rem; }
+    .gap-12 { gap: 3rem; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .justify-center { justify-content: center; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .space-y-6 > * + * { margin-top: 1.5rem; }
+    .space-y-8 > * + * { margin-top: 2rem; }
+    .space-y-10 > * + * { margin-top: 2.5rem; }
+    .text-center { text-align: center; }
+    .text-sm { font-size: 0.875rem; }
+    .text-base { font-size: 1rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .text-5xl { font-size: 3rem; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .leading-tight { line-height: 1.25; }
+    .leading-relaxed { line-height: 1.625; }
+    .opacity-60 { opacity: 0.6; }
+    .opacity-70 { opacity: 0.7; }
+    .opacity-80 { opacity: 0.8; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-12 { margin-bottom: 3rem; }
+    .mt-8 { margin-top: 2rem; }
+    .mt-12 { margin-top: 3rem; }
+    .pt-16 { padding-top: 4rem; }
+    .pb-24 { padding-bottom: 6rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+    .hidden { display: none; }
+    .sticky { position: sticky; }
+    .fixed { position: fixed; }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .top-0 { top: 0; }
+    .top-4 { top: 1rem; }
+    .right-4 { right: 1rem; }
+    .z-30 { z-index: 30; }
+    .z-50 { z-index: 50; }
+    .w-full { width: 100%; }
+    .h-5 { height: 1.25rem; }
+    .w-5 { width: 1.25rem; }
+    .w-6 { width: 1.5rem; }
+    .h-6 { height: 1.5rem; }
+    .w-8 { width: 2rem; }
+    .h-8 { height: 2rem; }
+    .min-h-screen { min-height: 100vh; }
+    .overflow-hidden { overflow: hidden; }
+    .pointer-events-none { pointer-events: none; }
+
+    @media (min-width: 768px) {
+      .md\\:flex { display: flex; }
+      .md\\:hidden { display: none; }
+      .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .md\\:text-5xl { font-size: 3rem; }
+      .md\\:max-w-xl { max-width: 36rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .lg\\:flex-row { flex-direction: row; }
+      .lg\\:items-center { align-items: center; }
+      .lg\\:gap-20 { gap: 5rem; }
+      .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 1280px) {
+      .xl\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>  <!--
+ Theme Toggle Button -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <div class="theme-toggle-track">
+        <div class="theme-toggle-thumb">
+          <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <div class="relative overflow-hidden min-h-screen">
+    <!-- Dynamic background elements -->
+    <div class="aurora-layer"></div>
+    <div class="gradient-stream"></div>
+    <div class="pointer-events-none absolute inset-0 bg-grid" style="opacity: 0.35;"></div>
+    
+    <!-- Floating shapes -->
+    <div class="pointer-events-none shape absolute" style="top: -6rem; right: -6rem; height: 18rem; width: 18rem;"></div>
+    <div class="pointer-events-none shape absolute" style="top: 33.333333%; left: -8rem; height: 20rem; width: 20rem;"></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 backdrop-blur-xl">
+      <div class="mx-auto flex w-full max-w-6xl items-center justify-between rounded-b-3xl border border-slate-100 bg-white/95 px-6 py-4 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)]">
+        <a href="#hero" class="flex items-center gap-3">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 font-semibold">GU</span>
+          <div class="flex flex-col leading-tight">
+            <span class="text-base font-semibold text-slate-900" data-i18n="brand.name">G.U. CoinStudio</span>
+            <span class="text-[11px] uppercase tracking-[0.38em] text-slate-400" data-i18n="brand.subtitle">Issuance Suite</span>
+          </div>
+        </a>
+        
+        <nav class="hidden items-center gap-8 text-sm text-slate-500 md:flex">
+          <a href="#features" class="transition hover:text-slate-900" data-i18n="nav.features">主要機能</a>
+          <a href="#architecture" class="transition hover:text-slate-900" data-i18n="nav.architecture">アーキテクチャ</a>
+          <a href="#partners" class="transition hover:text-slate-900" data-i18n="nav.partners">エコシステム</a>
+          <a href="#faq" class="transition hover:text-slate-900" data-i18n="nav.faq">FAQ</a>
+        </nav>
+        
+        <div class="hidden items-center gap-4 md:flex">
+          <!-- Language Switcher -->
+          <div class="relative">
+            <button id="language-toggle" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-slate-300">
+              <span id="current-lang">日本語</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div id="language-menu" class="absolute right-0 top-full mt-2 hidden w-32 rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+              <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50" data-lang="ja">日本語</button>
+              <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50" data-lang="en">English</button>
+            </div>
+          </div>
+          
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-medium text-slate-600" data-i18n="header.multichain">マルチチェーン対応</span>
+          <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white">
+            <span data-i18n="header.demo">デモを予約</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.75v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v15a.75.75 0 00.75.75h12a.75.75 0 00.75-.75v-4.5M21 12h-12m0 0l3.75-3.75M9 12l3.75 3.75" />
+            </svg>
+          </a>
+        </div>
+        
+        <button class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 transition hover:text-slate-900 md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="relative">
+      <!-- Hero Section -->
+      <section id="hero" class="fade-section" style="--delay: 0.05s">
+        <div class="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-16 lg:flex-row lg:items-center lg:gap-20">
+          <div class="flex-1 space-y-10">
+            <div class="space-y-5">
+              <span class="badge-soft" data-i18n="hero.badge">DeFi向けに再設計</span>
+              <h1 class="text-4xl font-semibold leading-tight tracking-tight text-slate-900 md:text-5xl">
+                <span data-i18n="hero.title">発行・流通・ガバナンスまで</span>
+                <span class="block bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 bg-clip-text text-transparent" data-i18n="hero.subtitle">次世代ステーブルコイン統合基盤</span>
+              </h1>
+              <p class="text-base leading-relaxed text-slate-600 md:max-w-xl" data-i18n="hero.description">
+                G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けプラットフォームです。
+              </p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white">
+                <span data-i18n="hero.cta.primary">プラットフォームに接続</span>
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 12h13.5M12 5.25L18.75 12 12 18.75" />
+                </svg>
+              </a>
+              <a href="#features" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900">
+                <span data-i18n="hero.cta.secondary">機能を確認</span>
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8m-8 5h4" />
+                </svg>
+              </a>
+            </div>
+            
+            <!-- Statistics cards with counter animation -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div class="stat-card reveal-card" style="--delay: 0.1s">
+                <span class="text-sm opacity-60">発行リードタイム</span>
+                <p class="text-3xl font-semibold" data-counter="30">30 分以内</p>
+                <span class="text-sm text-emerald-500/80">自動承認 + デプロイ</span>
+              </div>
+              <div class="stat-card reveal-card" style="--delay: 0.2s">
+                <span class="text-sm opacity-60">サポートチェーン</span>
+                <p class="text-3xl font-semibold" data-counter="7">7+</p>
+                <span class="text-sm opacity-60">主要EVMと高速チェーン</span>
+              </div>
+              <div class="stat-card reveal-card" style="--delay: 0.3s">
+                <span class="text-sm opacity-60">リアルタイム監視</span>
+                <p class="text-3xl font-semibold">24/7</p>
+                <span class="text-sm opacity-60">アラート遅延5秒未満</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Hero preview section -->
+          <div class="relative flex-1 space-y-6">
+            <div class="hero-preview">
+              <div class="preview-gradient"></div>
+              <div class="preview-content">
+                <div class="flex items-center justify-between">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600" data-i18n="preview.badge">ダッシュボードモック</span>
+                  <span class="text-[11px] tracking-[0.22em] text-slate-400 uppercase" data-i18n="preview.status">Snapshot Ready</span>
+                </div>
+                <div class="preview-window" style="aspect-ratio: 16/10;">
+                  <!-- Image Carousel -->
+                  <div class="image-carousel relative h-full overflow-hidden">
+                    <div class="carousel-track flex h-full transition-transform duration-500 ease-in-out">
+                      <!-- Slide 1 -->
+                      <div class="carousel-slide flex-shrink-0 w-full h-full relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                          <div class="text-center space-y-4">
+                            <div class="w-16 h-16 mx-auto bg-blue-600 rounded-2xl flex items-center justify-center">
+                              <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                              </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-slate-800" data-i18n="carousel.slide1.title">リアルタイム分析</h3>
+                            <p class="text-sm text-slate-600" data-i18n="carousel.slide1.desc">ライブメトリクスとパフォーマンス監視</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Slide 2 -->
+                      <div class="carousel-slide flex-shrink-0 w-full h-full relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center">
+                          <div class="text-center space-y-4">
+                            <div class="w-16 h-16 mx-auto bg-emerald-600 rounded-2xl flex items-center justify-center">
+                              <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                              </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold text-slate-800" data-i18n="carousel.slide2.title">セキュリティ管理</h3>
+                            <p class="text-sm text-slate-600" data-i18n="carousel.slide2.desc">多重署名とリスク制御システム</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Carousel Indicators -->
+                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                      <button class="carousel-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300 active" data-slide="0"></button>
+                      <button class="carousel-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300" data-slide="1"></button>
+                    </div>
+                    
+                    <!-- Carousel Navigation -->
+                    <button class="carousel-nav carousel-prev absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button class="carousel-nav carousel-next absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500" data-i18n="preview.desc">スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。</p>
+              </div>
+            </div>
+            
+            <div class="floating-note">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-blue-600 text-white">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                </svg>
+              </span>
+              <div class="flex flex-col">
+                <span class="text-sm font-semibold text-slate-900" data-i18n="floating.title">ライブデータ同期</span>
+                <span class="text-xs text-slate-500" data-i18n="floating.desc">グラフと指標をAPIで自動更新</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>      <!-
+- Features Section -->
+      <section id="features" class="fade-section" style="--delay: 0.1s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">主要機能</span>
+            <h2 class="text-3xl md:text-4xl font-semibold">発行からガバナンスまでを単一ダッシュボードで統合管理</h2>
+            <p class="text-base opacity-70">成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。</p>
+          </div>
+          
+          <div class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div class="feature-card reveal-card" style="--delay: 0.05s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">柔軟な発行ワークフロー</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip" style="background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246); border-color: rgba(59, 130, 246, 0.2);">ルールエンジン</span>
+                <span class="chip">ロール管理</span>
+              </div>
+            </div>
+            
+            <div class="feature-card reveal-card" style="--delay: 0.1s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(6, 182, 212, 0.1); color: rgb(6, 182, 212);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h11M9 21V3m3 18l9-9-9-9" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">クロスチェーン流動性</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip" style="background: rgba(6, 182, 212, 0.1); color: rgb(6, 182, 212); border-color: rgba(6, 182, 212, 0.2);">7+ チェーン</span>
+                <span class="chip">リアルタイム監視</span>
+              </div>
+            </div>
+            
+            <div class="feature-card reveal-card" style="--delay: 0.15s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(16, 185, 129, 0.1); color: rgb(16, 185, 129);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">監査 & コンプライアンス</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip" style="background: rgba(16, 185, 129, 0.1); color: rgb(16, 185, 129); border-color: rgba(16, 185, 129, 0.2);">自動レポート</span>
+                <span class="chip">リスクアラート</span>
+              </div>
+            </div>
+            
+            <div class="feature-card reveal-card" style="--delay: 0.2s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(168, 85, 247, 0.1); color: rgb(168, 85, 247);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21l-1.47-3.92M9.75 17h4.5M9.75 17L12 3.75 14.25 17m0 0H18l-1.47 3.92L15 17" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">ガバナンスダッシュボード</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip">オンチェーン実行</span>
+                <span class="chip" style="background: rgba(168, 85, 247, 0.1); color: rgb(168, 85, 247); border-color: rgba(168, 85, 247, 0.2);">リアルタイム分析</span>
+              </div>
+            </div>
+            
+            <div class="feature-card reveal-card" style="--delay: 0.25s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(245, 158, 11, 0.1); color: rgb(245, 158, 11);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7l9-4 9 4-9 4-9-4zm0 6l9 4 9-4m-9 4v6" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">API と SDK</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip">API</span>
+                <span class="chip" style="background: rgba(245, 158, 11, 0.1); color: rgb(245, 158, 11); border-color: rgba(245, 158, 11, 0.2);">SDK</span>
+              </div>
+            </div>
+            
+            <div class="feature-card reveal-card" style="--delay: 0.3s">
+              <div class="flex items-center gap-3">
+                <div class="feature-icon" style="background: rgba(14, 165, 233, 0.1); color: rgb(14, 165, 233);">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold">自動ロールバック</h3>
+              </div>
+              <p class="text-sm leading-relaxed opacity-70">異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。</p>
+              <div class="flex gap-2 text-sm">
+                <span class="chip" style="background: rgba(14, 165, 233, 0.1); color: rgb(14, 165, 233); border-color: rgba(14, 165, 233, 0.2);">冗長構成</span>
+                <span class="chip">リスク制御</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>      
+<!-- Architecture Section -->
+      <section id="architecture" class="fade-section" style="--delay: 0.12s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="stat-card relative overflow-hidden" style="padding: 2.5rem;">
+            <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+              <div class="space-y-6">
+                <span class="badge-soft">アーキテクチャ</span>
+                <h2 class="text-3xl md:text-4xl font-semibold">三層構造で性能・透明性・安全性を両立</h2>
+                <p class="text-base opacity-70">アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。</p>
+                
+                <div class="space-y-4">
+                  <div class="flex gap-4 reveal-card" style="--delay: 0.05s">
+                    <div class="flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; border-radius: 1rem; background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246); font-weight: 600;">1</div>
+                    <div>
+                      <h3 class="text-lg font-semibold">アクセス層</h3>
+                      <p class="text-sm opacity-70 mt-1">管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex gap-4 reveal-card" style="--delay: 0.1s">
+                    <div class="flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; border-radius: 1rem; background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246); font-weight: 600;">2</div>
+                    <div>
+                      <h3 class="text-lg font-semibold">サービス層</h3>
+                      <p class="text-sm opacity-70 mt-1">発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex gap-4 reveal-card" style="--delay: 0.15s">
+                    <div class="flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; border-radius: 1rem; background: rgba(59, 130, 246, 0.1); color: rgb(59, 130, 246); font-weight: 600;">3</div>
+                    <div>
+                      <h3 class="text-lg font-semibold">オンチェーン層</h3>
+                      <p class="text-sm opacity-70 mt-1">DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="space-y-6">
+                  <h3 class="text-lg font-semibold">運用ベストプラクティス</h3>
+                  <div class="space-y-3 text-sm opacity-70">
+                    <div class="flex items-start gap-3">
+                      <div style="width: 0.625rem; height: 0.625rem; border-radius: 50%; background: rgb(59, 130, 246); margin-top: 0.25rem; flex-shrink: 0;"></div>
+                      <span>サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <div style="width: 0.625rem; height: 0.625rem; border-radius: 50%; background: rgb(16, 185, 129); margin-top: 0.25rem; flex-shrink: 0;"></div>
+                      <span>Vault等で鍵管理、多重署名でチェーン上の操作を保護。</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <div style="width: 0.625rem; height: 0.625rem; border-radius: 50%; background: rgb(245, 158, 11); margin-top: 0.25rem; flex-shrink: 0;"></div>
+                      <span>Prometheus + Grafanaで指標を可視化し、アラートを自動化。</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <div style="width: 0.625rem; height: 0.625rem; border-radius: 50%; background: rgb(168, 85, 247); margin-top: 0.25rem; flex-shrink: 0;"></div>
+                      <span>ブルーグリーンデプロイとスマートコントラクト監査で更新リスクを抑制。</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partners Section -->
+      <section id="partners" class="fade-section" style="--delay: 0.14s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">エコシステム</span>
+            <h2 class="text-3xl md:text-4xl font-semibold">主要チェーン・金融機関・規制機関と連携</h2>
+            <p class="text-base opacity-70">モジュール式コネクタでクロスチェーンブリッジ、清算銀行、決済ゲートウェイを迅速に統合し、エコシステムを拡張します。</p>
+          </div>
+          
+          <div class="stat-card mt-14" style="padding: 2rem;">
+            <div class="grid grid-cols-2 gap-8 md:grid-cols-5 items-center">
+              <div class="flex justify-center opacity-60 transition-all duration-300 hover:opacity-100" style="transform: scale(1); transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="width: 7rem; height: 3rem; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">Ethereum</div>
+              </div>
+              <div class="flex justify-center opacity-60 transition-all duration-300 hover:opacity-100" style="transform: scale(1); transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="width: 7rem; height: 3rem; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">Polygon</div>
+              </div>
+              <div class="flex justify-center opacity-60 transition-all duration-300 hover:opacity-100" style="transform: scale(1); transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="width: 7rem; height: 3rem; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">BSC</div>
+              </div>
+              <div class="flex justify-center opacity-60 transition-all duration-300 hover:opacity-100" style="transform: scale(1); transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="width: 7rem; height: 3rem; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">Arbitrum</div>
+              </div>
+              <div class="flex justify-center opacity-60 transition-all duration-300 hover:opacity-100" style="transform: scale(1); transition: transform 0.3s ease, opacity 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="width: 7rem; height: 3rem; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">Optimism</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>      
+<!-- FAQ Section -->
+      <section id="faq" class="fade-section" style="--delay: 0.16s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="mx-auto max-w-3xl text-center space-y-4">
+            <span class="badge-soft">FAQ</span>
+            <h2 class="text-3xl md:text-4xl font-semibold">導入前によくある質問</h2>
+            <p class="text-base opacity-70">ステーブルコイン導入プロジェクトで頻出する疑問をまとめ、評価と意思決定をスムーズにします。</p>
+          </div>
+          
+          <div class="mt-12 space-y-5">
+            <div class="faq-item stat-card">
+              <div class="faq-question flex items-center justify-between" onclick="toggleFAQ(this)">
+                価値の安定性はどのように担保されていますか？
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-content">リアルタイムでオンチェーン化された準備資産と外部オラクルによる価格検証、自動清算ロジックにより担保率を常に目標以上に維持します。</div>
+              </div>
+            </div>
+            
+            <div class="faq-item stat-card">
+              <div class="faq-question flex items-center justify-between" onclick="toggleFAQ(this)">
+                各国の規制に適合できますか？
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-content">リージョン別KYCポリシーとテンプレートを内蔵し、監督当局への報告資料も自動生成。法務チームとの連携にも対応します。</div>
+              </div>
+            </div>
+            
+            <div class="faq-item stat-card">
+              <div class="faq-question flex items-center justify-between" onclick="toggleFAQ(this)">
+                運用中のリスクやインシデントにはどう対応しますか？
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-content">24/7監視システムと自動アラート、段階的エスカレーション、緊急時の自動ロールバック機能により、迅速な対応と影響の最小化を実現します。</div>
+              </div>
+            </div>
+            
+            <div class="faq-item stat-card">
+              <div class="faq-question flex items-center justify-between" onclick="toggleFAQ(this)">
+                既存システムとの統合はどの程度複雑ですか？
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-content">RESTful APIとWebhook、主要言語向けSDKを提供し、既存の会計システム、KYCプロバイダー、決済ゲートウェイとの統合を簡素化します。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="fade-section" style="--delay: 0.18s">
+        <div class="mx-auto max-w-6xl px-6 pb-24">
+          <div class="stat-card text-center" style="padding: 4rem 2rem;">
+            <div class="space-y-6">
+              <h2 class="text-3xl md:text-4xl font-semibold">今すぐG.U. CoinStudioを体験</h2>
+              <p class="text-base opacity-70 max-w-2xl mx-auto">専門チームがあなたのプロジェクトに最適なステーブルコイン戦略を提案します。デモ環境での実機体験も可能です。</p>
+              <div class="flex flex-col gap-4 items-center">
+                <div class="flex gap-4">
+                  <a href="mailto:contact@gu-coinstudio.com" class="cta-button">
+                    営業チームに連絡
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </a>
+                  <a href="#" class="secondary-button">
+                    テクニカル相談を予約
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4v10m6-10v10m-6-4h6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10" style="border-top: 1px solid; border-color: rgba(148, 163, 184, 0.2);">
+        <div class="flex flex-col gap-1">
+          <span class="font-semibold">G.U. CoinStudio Labs</span>
+          <span class="text-sm opacity-60">Copyright © 2025 — All rights reserved.</span>
+        </div>
+        <div class="flex gap-6 text-sm opacity-70">
+          <a href="#" class="hover:opacity-100">プライバシーポリシー</a>
+          <span class="hidden h-1 w-1 rounded-full bg-current opacity-30 sm:flex"></span>
+          <a href="#" class="hover:opacity-100">利用規約</a>
+          <span class="hidden h-1 w-1 rounded-full bg-current opacity-30 sm:flex"></span>
+          <a href="#faq" class="hover:opacity-100">ヘルプセンター</a>
+          <span class="hidden h-1 w-1 rounded-full bg-current opacity-30 sm:flex"></span>
+          <a href="mailto:security@gu-coinstudio.com" class="hover:opacity-100">セキュリティ連絡</a>
+        </div>
+      </div>
+    </footer>
+  </div>  <script>
+    // Multi-language Support
+    const translations = {
+      ja: {
+        'brand.name': 'G.U. CoinStudio',
+        'brand.subtitle': 'Issuance Suite',
+        'nav.features': '主要機能',
+        'nav.architecture': 'アーキテクチャ',
+        'nav.partners': 'エコシステム',
+        'nav.faq': 'FAQ',
+        'header.multichain': 'マルチチェーン対応',
+        'header.demo': 'デモを予約',
+        'hero.badge': 'DeFi向けに再設計',
+        'hero.title': '発行・流通・ガバナンスまで',
+        'hero.subtitle': '次世代ステーブルコイン統合基盤',
+        'hero.description': 'G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けプラットフォームです。',
+        'hero.cta.primary': 'プラットフォームに接続',
+        'hero.cta.secondary': '機能を確認',
+        'carousel.slide1.title': 'リアルタイム分析',
+        'carousel.slide1.desc': 'ライブメトリクスとパフォーマンス監視',
+        'carousel.slide2.title': 'セキュリティ管理',
+        'carousel.slide2.desc': '多重署名とリスク制御システム',
+        'floating.title': 'ライブデータ同期',
+        'floating.desc': 'グラフと指標をAPIで自動更新',
+        'preview.badge': 'ダッシュボードモック',
+        'preview.status': 'Snapshot Ready',
+        'preview.desc': 'スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。'
+      },
+      en: {
+        'brand.name': 'G.U. CoinStudio',
+        'brand.subtitle': 'Issuance Suite',
+        'nav.features': 'Features',
+        'nav.architecture': 'Architecture',
+        'nav.partners': 'Ecosystem',
+        'nav.faq': 'FAQ',
+        'header.multichain': 'Multi-chain Support',
+        'header.demo': 'Book Demo',
+        'hero.badge': 'Redesigned for DeFi',
+        'hero.title': 'Issuance, Circulation & Governance',
+        'hero.subtitle': 'Next-Gen Stablecoin Platform',
+        'hero.description': 'G.U. CoinStudio integrates asset custody, rule engines, and cross-chain payments to launch reliable stablecoin products in minutes for enterprise platforms.',
+        'hero.cta.primary': 'Connect to Platform',
+        'hero.cta.secondary': 'View Features',
+        'carousel.slide1.title': 'Real-time Analytics',
+        'carousel.slide1.desc': 'Live metrics and performance monitoring',
+        'carousel.slide2.title': 'Security Management',
+        'carousel.slide2.desc': 'Multi-signature and risk control systems',
+        'floating.title': 'Live Data Sync',
+        'floating.desc': 'Auto-update charts and metrics via API',
+        'preview.badge': 'Dashboard Mock',
+        'preview.status': 'Snapshot Ready',
+        'preview.desc': 'Build product-connected heroes instantly by simply replacing screenshots.'
+      }
+    };
+
+    // Language Manager
+    class LanguageManager {
+      constructor() {
+        this.currentLang = localStorage.getItem('language') || 'ja';
+        this.init();
+      }
+
+      init() {
+        this.updateLanguage(this.currentLang);
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        const toggle = document.getElementById('language-toggle');
+        const menu = document.getElementById('language-menu');
+        const options = document.querySelectorAll('.lang-option');
+
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => {
+          menu.classList.add('hidden');
+        });
+
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const lang = option.dataset.lang;
+            this.updateLanguage(lang);
+            menu.classList.add('hidden');
+          });
+        });
+      }
+
+      updateLanguage(lang) {
+        this.currentLang = lang;
+        localStorage.setItem('language', lang);
+        
+        // Update current language display
+        const currentLangEl = document.getElementById('current-lang');
+        currentLangEl.textContent = lang === 'ja' ? '日本語' : 'English';
+        
+        // Update HTML lang attribute
+        document.documentElement.lang = lang;
+        
+        // Update all translatable elements
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+          const key = element.dataset.i18n;
+          if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+      }
+    }
+
+    // Image Carousel
+    class ImageCarousel {
+      constructor() {
+        this.currentSlide = 0;
+        this.totalSlides = 2;
+        this.autoPlayInterval = null;
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.startAutoPlay();
+      }
+
+      setupEventListeners() {
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+
+        prevBtn.addEventListener('click', () => this.prevSlide());
+        nextBtn.addEventListener('click', () => this.nextSlide());
+
+        indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // Pause auto-play on hover
+        const carousel = document.querySelector('.image-carousel');
+        carousel.addEventListener('mouseenter', () => this.stopAutoPlay());
+        carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+      }
+
+      goToSlide(slideIndex) {
+        this.currentSlide = slideIndex;
+        this.updateCarousel();
+      }
+
+      nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.updateCarousel();
+      }
+
+      prevSlide() {
+        this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
+      }
+
+      updateCarousel() {
+        const track = document.querySelector('.carousel-track');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        
+        // Update track position
+        track.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+        
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === this.currentSlide);
+        });
+      }
+
+      startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => {
+          this.nextSlide();
+        }, 4000);
+      }
+
+      stopAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+          this.autoPlayInterval = null;
+        }
+      }
+    }
+
+    // Theme Management System
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.toggleButton = document.getElementById('theme-toggle');
+        this.html = document.documentElement;
+        this.init();
+      }
+
+      init() {
+        this.setTheme(this.currentTheme);
+        this.setupEventListeners();
+        this.updateToggleButton();
+      }
+
+      setupEventListeners() {
+        this.toggleButton.addEventListener('click', () => {
+          this.toggleTheme();
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            this.setTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
+
+      setTheme(theme) {
+        this.currentTheme = theme;
+        this.html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        this.updateToggleButton();
+        
+        window.dispatchEvent(new CustomEvent('themechange', { 
+          detail: { theme } 
+        }));
+      }
+
+      toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+      }
+
+      updateToggleButton() {
+        const track = this.toggleButton.querySelector('.theme-toggle-track');
+        const thumb = this.toggleButton.querySelector('.theme-toggle-thumb');
+        
+        if (this.currentTheme === 'dark') {
+          track.classList.add('dark');
+          thumb.classList.add('dark');
+        } else {
+          track.classList.remove('dark');
+          thumb.classList.remove('dark');
+        }
+      }
+    }
+
+    // Animation Controller
+    class AnimationController {
+      constructor() {
+        this.observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+        this.init();
+      }
+
+      init() {
+        this.setupIntersectionObserver();
+        this.setupCounterAnimations();
+        this.setupParallaxEffects();
+      }
+
+      setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              
+              if (entry.target.classList.contains('stat-card') || entry.target.querySelector('[data-counter]')) {
+                this.animateCounters(entry.target);
+              }
+            }
+          });
+        }, this.observerOptions);
+
+        document.querySelectorAll('.fade-section, .reveal-card').forEach(el => {
+          observer.observe(el);
+        });
+      }
+
+      setupCounterAnimations() {
+        this.animateCounter = (element, target, duration = 2000) => {
+          const start = 0;
+          const increment = target / (duration / 16);
+          let current = start;
+          const suffix = element.dataset.suffix || '';
+          
+          const timer = setInterval(() => {
+            current += increment;
+            const value = Math.floor(current);
+            element.textContent = value + suffix;
+            
+            if (current >= target) {
+              element.textContent = target + suffix;
+              clearInterval(timer);
+            }
+          }, 16);
+        };
+      }
+
+      animateCounters(container) {
+        const counterElements = container.querySelectorAll('[data-counter]');
+        counterElements.forEach(element => {
+          if (!element.dataset.animated) {
+            const target = parseInt(element.dataset.counter);
+            const originalText = element.textContent.trim();
+            const suffix = originalText.replace(target.toString(), '').trim();
+            
+            element.dataset.animated = 'true';
+            element.dataset.suffix = suffix;
+            
+            this.animateCounter(element, target, 2000);
+          }
+        });
+      }
+
+      setupParallaxEffects() {
+        let ticking = false;
+        
+        const updateParallax = () => {
+          const scrolled = window.pageYOffset;
+          const parallaxElements = document.querySelectorAll('.shape');
+          
+          parallaxElements.forEach((element, index) => {
+            const speed = 0.5 + (index * 0.2);
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translateY(${yPos}px)`;
+          });
+          
+          ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        });
+      }
+    }
+
+    // FAQ Toggle Function
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('svg');
+      const isOpen = answer.classList.contains('open');
+      
+      // Close all other FAQs
+      document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+        if (openAnswer !== answer) {
+          openAnswer.classList.remove('open');
+          openAnswer.previousElementSibling.querySelector('svg').style.transform = 'rotate(0deg)';
+        }
+      });
+      
+      // Toggle current FAQ
+      if (isOpen) {
+        answer.classList.remove('open');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        answer.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Initialize everything
+    const themeManager = new ThemeManager();
+    const animationController = new AnimationController();
+    const languageManager = new LanguageManager();
+    const imageCarousel = new ImageCarousel();
+
+    // Enhanced smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Loading animations
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('theme')) {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        themeManager.setTheme(prefersDark ? 'dark' : 'light');
+      }
+      
+      setTimeout(() => {
+        document.querySelectorAll('.fade-section').forEach((el, index) => {
+          setTimeout(() => {
+            el.classList.add('is-visible');
+          }, index * 100);
+        });
+      }, 100);
+    });
+
+    // Performance monitoring
+    if ('PerformanceObserver' in window) {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (entry.duration > 16.67) {
+            console.warn('Long animation frame detected:', entry.duration);
+          }
+        }
+      });
+      
+      try {
+        observer.observe({entryTypes: ['measure']});
+      } catch (e) {
+        console.log('Performance monitoring not fully supported');
+      }
+    }
+  </script>
+</body>
+</html>

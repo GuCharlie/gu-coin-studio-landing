@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行プラットフォーム</title>
+  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行システム</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -41,6 +41,7 @@
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
       --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+      --theme-transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       
       /* Spacing and sizing */
       --space-xs: 0.25rem;
@@ -415,14 +416,470 @@
       animation: auroraRotate 36s linear infinite;
     }
 
-    .preview-placeholder {
+    .image-carousel:hover .carousel-nav {
+      opacity: 1;
+    }
+
+    .carousel-indicator.active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.2);
+    }
+
+    .carousel-track {
+      transform: translateX(0%);
+    }
+
+    .theme-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(255, 255, 255, 0.9);
+      color: #fbbf24;
+      cursor: pointer;
+      box-shadow: 0 18px 35px -25px rgba(15, 23, 42, 0.55);
+      transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s var(--ease-out-expo), background-color 0.25s var(--ease-out-expo), border-color 0.25s var(--ease-out-expo);
+    }
+
+    .theme-toggle-icon:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 38px -26px rgba(15, 23, 42, 0.6);
+    }
+
+    .theme-toggle-icon svg {
+      width: 18px;
+      height: 18px;
+      transition: opacity 0.2s var(--ease-out-expo);
+    }
+
+    .theme-toggle-icon .moon-icon {
+      display: none;
+    }
+
+    .theme-toggle-icon.dark {
+      background: rgba(15, 23, 42, 0.85);
+      border-color: rgba(148, 163, 184, 0.4);
+      color: #e2e8f0;
+      box-shadow: 0 20px 38px -26px rgba(30, 41, 59, 0.7);
+    }
+
+    .theme-toggle-icon.dark .sun-icon {
+      display: none;
+    }
+
+    .theme-toggle-icon.dark .moon-icon {
+      display: block;
+    }
+
+    .partner-carousel {
       position: relative;
-      z-index: 1;
+      overflow: hidden;
+      border-radius: 1.75rem;
+      background: linear-gradient(135deg, rgba(241, 245, 249, 0.85), rgba(226, 232, 240, 0.7));
+      padding: 1.75rem 0;
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .partner-carousel::before,
+    .partner-carousel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 64px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .partner-carousel::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
+    }
+
+    .partner-carousel::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(248, 250, 252, 1), rgba(248, 250, 252, 0));
+    }
+
+    .partner-track {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+      width: max-content;
+      animation: partner-scroll 26s linear infinite;
+    }
+
+    .partner-carousel:hover .partner-track {
+      animation-play-state: paused;
+    }
+
+    .partner-logo {
+      flex: 0 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
-      background: repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.12) 0px, rgba(148, 163, 184, 0.12) 18px, transparent 18px, transparent 36px);
+      min-width: 120px;
+      opacity: 0.72;
+      transition: transform 0.35s var(--ease-out-expo), opacity 0.35s var(--ease-out-expo);
+    }
+
+    .partner-logo img {
+      max-height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .partner-logo:hover {
+      transform: translateY(-4px);
+      opacity: 1;
+    }
+
+    @keyframes partner-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 768px) {
+      .partner-carousel {
+        padding: 1.25rem 0;
+      }
+
+      .partner-track {
+        gap: 2.5rem;
+        animation-duration: 20s;
+      }
+
+      .partner-logo img {
+        max-height: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .partner-carousel::before,
+      .partner-carousel::after {
+        width: 40px;
+      }
+
+      .partner-track {
+        gap: 2rem;
+        animation-duration: 18s;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .theme-toggle-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      .theme-toggle-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    #language-menu {
+      z-index: 50;
+    }
+
+    [data-theme="dark"] body {
+      color: #e6ecff;
+      background-color: #030712;
+      background-image: radial-gradient(circle at 0% -20%, rgba(79, 70, 229, 0.35), transparent 55%),
+        radial-gradient(circle at 95% 10%, rgba(14, 165, 233, 0.22), transparent 60%),
+        linear-gradient(180deg, rgba(2, 6, 23, 0.96), #020617 70%, #00010a 100%);
+      background-attachment: fixed;
+      transition: background-color var(--transition-medium) var(--ease-out-expo);
+    }
+
+    [data-theme="dark"] .aurora-layer {
+      background: conic-gradient(from 140deg, rgba(79, 70, 229, 0.32), rgba(30, 64, 175, 0.26), rgba(14, 165, 233, 0.22), rgba(16, 185, 129, 0.2));
+      mix-blend-mode: lighten;
+      opacity: 0.3;
+      filter: blur(140px);
+    }
+
+    [data-theme="dark"] .gradient-stream {
+      background: linear-gradient(150deg, rgba(79, 70, 229, 0.22), rgba(14, 165, 233, 0.16), rgba(14, 116, 144, 0.08));
+      opacity: 0.38;
+      mix-blend-mode: screen;
+    }
+
+    [data-theme="dark"] .shape {
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.22), transparent 62%);
+    }
+
+    [data-theme="dark"] .header-bar {
+      background: rgba(8, 12, 26, 0.88);
+      border: 1px solid rgba(99, 102, 241, 0.28);
+      box-shadow: 0 24px 70px -34px rgba(14, 165, 233, 0.45);
+      backdrop-filter: blur(24px);
+    }
+
+    [data-theme="dark"] #language-toggle {
+      background: rgba(18, 28, 52, 0.9);
+      border-color: rgba(99, 102, 241, 0.32);
+      color: rgba(226, 232, 240, 0.85);
+      box-shadow: 0 18px 40px -26px rgba(79, 70, 229, 0.55);
+    }
+
+    [data-theme="dark"] #language-menu {
+      background: rgba(8, 12, 26, 0.95);
+      border-color: rgba(79, 70, 229, 0.35);
+      box-shadow: 0 28px 70px -35px rgba(15, 23, 42, 0.85);
+    }
+
+    [data-theme="dark"] .lang-option {
+      color: rgba(226, 232, 240, 0.78);
+    }
+
+    [data-theme="dark"] .lang-option:hover {
+      background: rgba(99, 102, 241, 0.2);
+    }
+
+    [data-theme="dark"] .theme-toggle-icon {
+      background: rgba(8, 12, 26, 0.92);
+      border-color: rgba(99, 102, 241, 0.35);
+      color: #e0e9ff;
+      box-shadow: 0 22px 48px -26px rgba(30, 64, 175, 0.65);
+    }
+
+    [data-theme="dark"] .theme-toggle-icon.dark {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.4), rgba(14, 165, 233, 0.35));
+      border-color: rgba(99, 102, 241, 0.45);
+      color: #f1f5ff;
+    }
+
+    [data-theme="dark"] .card-base {
+      background: linear-gradient(135deg, rgba(13, 19, 37, 0.78), rgba(17, 24, 39, 0.62));
+      border: 1px solid rgba(99, 102, 241, 0.28);
+      box-shadow: 0 35px 90px -40px rgba(30, 64, 175, 0.6);
+      backdrop-filter: blur(26px);
+      color: rgba(226, 232, 240, 0.92);
+    }
+
+    [data-theme="dark"] .feature-card {
+      border-color: rgba(99, 102, 241, 0.32);
+      box-shadow: 0 30px 80px -38px rgba(56, 189, 248, 0.55);
+    }
+
+    [data-theme="dark"] .feature-card:hover {
+      box-shadow: 0 35px 90px -36px rgba(56, 189, 248, 0.6);
+    }
+
+    [data-theme="dark"] .stat-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.35), transparent 58%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    [data-theme="dark"] .stat-card:hover::after {
+      opacity: 1;
+    }
+
+    [data-theme="dark"] .badge-soft {
+      border-color: rgba(129, 140, 248, 0.35);
+      background: rgba(99, 102, 241, 0.2);
+      color: #c7d2fe;
+      box-shadow: 0 18px 40px -28px rgba(79, 70, 229, 0.55);
+    }
+
+    [data-theme="dark"] .chip {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(226, 232, 240, 0.75);
+    }
+
+    [data-theme="dark"] .cta-button {
+      background-image: linear-gradient(120deg, #4f46e5, #6366f1, #0ea5e9);
+      box-shadow: 0 28px 65px -30px rgba(79, 70, 229, 0.8);
+      color: #f8fafc;
+    }
+
+    [data-theme="dark"] .cta-button::after {
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), transparent 70%);
+    }
+
+    [data-theme="dark"] .text-slate-900,
+    [data-theme="dark"] .text-slate-800,
+    [data-theme="dark"] .text-slate-700 {
+      color: #f1f5ff !important;
+    }
+
+    [data-theme="dark"] .text-slate-600,
+    [data-theme="dark"] .text-slate-500 {
+      color: #c7d2fe !important;
+    }
+
+    [data-theme="dark"] .text-slate-400 {
+      color: #a5b4fc !important;
+    }
+
+    [data-theme="dark"] .bg-white {
+      background-color: rgba(15, 23, 42, 0.85) !important;
+    }
+
+    [data-theme="dark"] .bg-blue-50 {
+      background-color: rgba(99, 102, 241, 0.22) !important;
+    }
+
+    [data-theme="dark"] .border-slate-200 {
+      border-color: rgba(148, 163, 184, 0.28) !important;
+    }
+
+    [data-theme="dark"] .floating-note {
+      background: rgba(10, 16, 32, 0.85);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 32px 70px -35px rgba(79, 70, 229, 0.55);
+      color: rgba(226, 232, 240, 0.88);
+    }
+
+    [data-theme="dark"] .floating-note span:first-child {
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    }
+
+    [data-theme="dark"] .hero-preview {
+      border-color: rgba(99, 102, 241, 0.28);
+      background: linear-gradient(135deg, rgba(12, 18, 36, 0.82), rgba(21, 29, 45, 0.68));
+      box-shadow: 0 40px 90px -38px rgba(0, 0, 0, 0.7);
+    }
+
+    [data-theme="dark"] .preview-gradient {
+      background: conic-gradient(from 160deg, rgba(79, 70, 229, 0.35), rgba(56, 189, 248, 0.22), rgba(16, 185, 129, 0.18));
+      opacity: 0.5;
+      mix-blend-mode: lighten;
+    }
+
+    [data-theme="dark"] .preview-window {
+      background: linear-gradient(180deg, rgba(6, 11, 24, 0.95), rgba(12, 20, 38, 0.92));
+      border-color: rgba(99, 102, 241, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="dark"] .preview-window::before {
+      background: linear-gradient(to right, rgba(99, 102, 241, 0.18), rgba(14, 165, 233, 0.12));
+      border-bottom: 1px solid rgba(99, 102, 241, 0.22);
+    }
+
+    [data-theme="dark"] .preview-content {
+      color: rgba(226, 232, 240, 0.92);
+    }
+
+    [data-theme="dark"] #contact .card-base {
+      background: linear-gradient(135deg, rgba(8, 12, 26, 0.88), rgba(17, 24, 39, 0.7));
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    [data-theme="dark"] #contact .chip {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(226, 232, 240, 0.75);
+    }
+
+    [data-theme="dark"] .footer-inner {
+      color: rgba(199, 210, 254, 0.78);
+    }
+
+    [data-theme="dark"] .footer-legal,
+    [data-theme="dark"] .footer-tagline {
+      color: rgba(199, 210, 254, 0.75);
+    }
+
+    [data-theme="dark"] .footer-logo {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.4), rgba(14, 165, 233, 0.32));
+      color: #f1f5ff;
+      box-shadow: 0 18px 40px -24px rgba(79, 70, 229, 0.45);
+    }
+
+    [data-theme="dark"] .footer-separator {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0), rgba(99, 102, 241, 0.65), rgba(99, 102, 241, 0));
+      opacity: 1;
+    }
+
+    [data-theme="dark"] footer {
+      background: rgba(6, 11, 24, 0.85);
+      border-top: 1px solid rgba(99, 102, 241, 0.3);
+      box-shadow: 0 -20px 60px -40px rgba(14, 165, 233, 0.35);
+      backdrop-filter: blur(24px);
+    }
+
+    [data-theme="dark"] footer a {
+      color: rgba(165, 180, 252, 0.75);
+    }
+
+    [data-theme="dark"] footer a:hover {
+      color: #fff;
+    }
+
+    [data-theme="dark"] .partner-carousel {
+      background: linear-gradient(135deg, rgba(8, 12, 26, 0.88), rgba(17, 24, 39, 0.72));
+      mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      box-shadow: 0 30px 80px -35px rgba(30, 64, 175, 0.55);
+    }
+
+    [data-theme="dark"] .partner-carousel::before {
+      background: linear-gradient(to right, rgba(6, 11, 24, 0.95), rgba(6, 11, 24, 0));
+    }
+
+    [data-theme="dark"] .partner-carousel::after {
+      background: linear-gradient(to left, rgba(6, 11, 24, 0.95), rgba(6, 11, 24, 0));
+    }
+
+    [data-theme="dark"] .partner-logo {
+      opacity: 0.82;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      border-radius: 0.9rem;
+      background: rgba(59, 130, 246, 0.12);
+      color: rgb(37, 99, 235);
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-separator {
+      width: 72px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0), rgba(59, 130, 246, 0.45), rgba(37, 99, 235, 0));
+      opacity: 0.65;
+    }
+
+    .footer-tagline {
+      max-width: 420px;
+      line-height: 1.6;
+      font-size: 0.875rem;
+    }
+
+    .footer-legal {
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      color: rgb(100, 116, 139);
     }
 
     .floating-note {
@@ -442,6 +899,17 @@
   </style>
 </head>
 <body class="scroll-smooth">
+  <div class="fixed top-3 right-3 z-50">
+    <button id="theme-toggle" class="theme-toggle-icon" aria-label="Toggle dark mode">
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>
+    </button>
+  </div>
+
   <div class="relative overflow-hidden">
     <div class="aurora-layer"></div>
     <div class="gradient-stream"></div>
@@ -450,28 +918,40 @@
     <div class="pointer-events-none shape top-1/3 -left-32 h-80 w-80"></div>
 
     <header class="sticky top-0 z-30 backdrop-blur-xl">
-      <div class="mx-auto flex w-full max-w-6xl items-center justify-between rounded-b-3xl border border-slate-100 bg-white/95 px-6 py-4 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)]">
+      <div class="header-bar mx-auto flex w-full max-w-6xl items-center justify-between rounded-b-3xl border border-slate-100 bg-white/95 px-6 py-4 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)]">
         <a href="#hero" class="flex items-center gap-3">
           <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 font-semibold">GU</span>
           <div class="flex flex-col leading-tight">
-            <span class="text-base font-semibold text-slate-900">G.U. CoinStudio</span>
-            <span class="text-[11px] uppercase tracking-[0.38em] text-slate-400">Issuance Suite</span>
+            <span class="text-base font-semibold text-slate-900" data-ja="G.U. CoinStudio" data-en="G.U. CoinStudio">G.U. CoinStudio</span>
+            <span class="text-[11px] uppercase tracking-[0.38em] text-slate-400" data-ja="Issuance Suite" data-en="Issuance Suite">Issuance Suite</span>
           </div>
         </a>
         <nav class="hidden items-center gap-8 text-sm text-slate-500 md:flex">
-          <a href="#features" class="transition hover:text-slate-900">主要機能</a>
-          <a href="#architecture" class="transition hover:text-slate-900">アーキテクチャ</a>
-          <a href="#partners" class="transition hover:text-slate-900">エコシステム</a>
-          <a href="#faq" class="transition hover:text-slate-900">FAQ</a>
+          <a href="#features" class="transition hover:text-slate-900" data-ja="主要機能" data-en="Features">主要機能</a>
+          <a href="#architecture" class="transition hover:text-slate-900" data-ja="アーキテクチャ" data-en="Architecture">アーキテクチャ</a>
+          <a href="#partners" class="transition hover:text-slate-900" data-ja="エコシステム" data-en="Ecosystem">エコシステム</a>
+          <a href="#faq" class="transition hover:text-slate-900" data-ja="FAQ" data-en="FAQ">FAQ</a>
         </nav>
-        <div class="hidden items-center gap-4 md:flex">
-          <span class="chip">マルチチェーン対応</span>
+        <div class="hidden items-center gap-4 md:flex ml-auto">
+          <span class="chip" data-ja="EVM互換チェーン対応" data-en="Multi-chain Support">EVM互換チェーン対応</span>
           <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white">
-            デモを予約
+            <span data-ja="デモを予約" data-en="Book Demo">デモを予約</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 8.75v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v15a.75.75 0 00.75.75h12a.75.75 0 00.75-.75v-4.5M21 12h-12m0 0l3.75-3.75M9 12l3.75 3.75" />
             </svg>
           </a>
+        </div>
+        <div class="relative hidden md:block ml-6">
+          <button id="language-toggle" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-slate-300" aria-haspopup="true" aria-expanded="false">
+            <span id="current-lang">日本語</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="language-menu" class="absolute right-0 top-full mt-2 hidden w-32 rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+            <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50" data-lang="ja">日本語</button>
+            <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50" data-lang="en">English</button>
+          </div>
         </div>
         <button class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 transition hover:text-slate-900 md:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
@@ -486,24 +966,24 @@
         <div class="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-16 lg:flex-row lg:items-center lg:gap-20">
           <div class="flex-1 space-y-10">
             <div class="space-y-5">
-              <span class="badge-soft">DeFi向けに再設計</span>
+              <span class="badge-soft" data-ja="DeFi向けに再設計" data-en="Redesigned for DeFi">DeFi向けに再設計</span>
               <h1 class="text-4xl font-semibold leading-tight tracking-tight text-slate-900 md:text-5xl">
-                発行・流通・ガバナンスまで
-                <span class="block bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 bg-clip-text text-transparent">次世代ステーブルコイン統合基盤</span>
+                <span data-ja="発行・流通・ガバナンスまで" data-en="From Issuance to Governance">発行・流通・ガバナンスまで</span>
+                <span class="block bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 bg-clip-text text-transparent" data-ja="次世代ステーブルコイン統合基盤" data-en="Next-Generation Stablecoin Platform">次世代ステーブルコイン統合基盤</span>
               </h1>
-              <p class="text-base leading-relaxed text-slate-600 md:max-w-xl">
-                G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けプラットフォームです。
+              <p class="text-base leading-relaxed text-slate-600 md:max-w-xl" data-ja="G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けシステムです。" data-en="G.U. CoinStudio unifies asset custody, rule engines, and cross-chain settlement so enterprise teams can launch reliable stablecoin products in minutes.">
+                G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けシステムです。
               </p>
             </div>
             <div class="flex flex-wrap items-center gap-4">
               <a href="#contact" class="cta-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white">
-                プラットフォームに接続
+                <span data-ja="システムに接続" data-en="Connect to Platform">システムに接続</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 12h13.5M12 5.25L18.75 12 12 18.75" />
                 </svg>
               </a>
               <a href="#features" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900">
-                機能を確認
+                <span data-ja="機能を確認" data-en="See Features">機能を確認</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8m-8 5h4" />
                 </svg>
@@ -536,11 +1016,41 @@
                   <span class="text-[11px] tracking-[0.22em] text-slate-400 uppercase">Snapshot Ready</span>
                 </div>
                 <div class="preview-window aspect-[16/10]">
-                  <div class="preview-placeholder">
-                    <img src="csdemo1.png" alt="G.U. CoinStudio" class="max-w-full max-h-full rounded-xl shadow" />
+                  <div class="image-carousel relative h-full overflow-hidden">
+                    <div class="carousel-track flex h-full transition-transform duration-500 ease-in-out">
+                      <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                          <img src="images/csdemo1.png" alt="G.U. CoinStudio ダッシュボード画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                        </div>
+                      </div>
+                      <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                          <img src="images/csdemo2.png" alt="G.U. CoinStudio ユーザー画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                        </div>
+                      </div>
+                      <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                          <img src="images/csdemo3.png" alt="G.U. CoinStudio 管理画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform space-x-2">
+                      <button class="carousel-indicator h-2 w-2 rounded-full bg-white/50 transition-all duration-300 active" data-slide="0"></button>
+                      <button class="carousel-indicator h-2 w-2 rounded-full bg-white/50 transition-all duration-300" data-slide="1"></button>
+                    </div>
+                    <button class="carousel-nav carousel-prev absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 transform items-center justify-center rounded-full bg-white/80 opacity-0 transition-opacity hover:opacity-100">
+                      <svg class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button class="carousel-nav carousel-next absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 transform items-center justify-center rounded-full bg-white/80 opacity-0 transition-opacity hover:opacity-100">
+                      <svg class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
-                <p class="text-xs text-slate-500">G.U. CoinStudioユーザーアプリ画面</p>
+                <p class="text-xs text-slate-500">スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。</p>
               </div>
             </div>
             <div class="floating-note">
@@ -727,25 +1237,49 @@
         <div class="mx-auto max-w-6xl px-6 pb-24">
           <div class="mx-auto max-w-3xl text-center space-y-4">
             <span class="badge-soft">エコシステム</span>
-            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">主要チェーン・金融機関・規制機関と連携</h2>
-            <p class="text-base text-slate-600">モジュール式コネクタでクロスチェーンブリッジ、清算銀行、決済ゲートウェイを迅速に統合し、エコシステムを拡張します。</p>
+            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">主要チェーン・金融機関・パートナーと連携</h2>
+            <p class="text-base text-slate-600">モジュール式、業務管理機能対応、既存システムを迅速に統合し、エコシステムを拡張します。</p>
           </div>
           <div class="card-base mt-14 p-6 md:p-8">
-            <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5 items-center">
-              <div class="flex justify-center opacity-60 transition duration-300 hover:opacity-100 hover:scale-105">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5sWUmHlc-58YdWp24i8ZNNwK7ZvLVgHz0M_y291GsZav89-_4OE1Z6JhxYAZB7Kp1v6iu4YrNwGEZhNJouDlzMQ_2m-EYMOlNJyPpb57E7W2kUPek-VdSiUy1KBsJkTSsn5Tx489MI_y52ARIiHxGhZEhhmo-Ov0Xm4pOt-4ZdzuhrXzK3CIx819TOzFoEntm84ihh0-MO-HJ__WnrAWYtX_RyOPZXc5ETWX1h6hq4Ow0oOSddn8D005UgxlUWbZ1-m-lIiSvlmI" alt="Partner A" class="w-28 sm:w-32" />
-              </div>
-              <div class="flex justify-center opacity-60 transition duration-300 hover:opacity-100 hover:scale-105">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6IaC0g_fxTzf74tvA-QnaFcBM1t6jf1SFDCc_3atWwudp9rmcdC7VDSWHhZd1_I5Cx49G4INbTUyTYtMtweYDvFsuOhNzRcu-pyHPKa42LXDppr8DB7YnD-We3JsoPS7mgiih42vgSlqYVgROgwq78jxS4ycRdyydFz_F8fCyw5bff3ncCyxUT2aI9cTq9SR83zMA_NS3oe1yN4bDe3PSWbkmHJCE1xBEsHeTTWNa3XNBVQL8IBvte6BSR_6ORE-Eu5XR_R9QLI" alt="Partner B" class="w-28 sm:w-32" />
-              </div>
-              <div class="flex justify-center opacity-60 transition duration-300 hover:opacity-100 hover:scale-105">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEU77YFnV7LTTe3QIVqB1XWwz5p1LiAoA6so7HW6ponnRYmNlFohboR3H9RanvExWXFkyN5tVDNR4Lq7_emdVOSG1_jRYVE77Go7CASS6pm5135uLHIfKernV_Noauaby5wDrPvkWUOPSsgUC-M66KMzpbJmZCTCeQzLWOxmYzqHQaYJSQQKM286e6X0LRR5pRM5T2llnUGvnlmDlni1iDjYXsMkNkh4fn4l_vJopEPIPO6PEj1w5EeFS9v3DGyUwrnk8i6Z4ZYD8" alt="Partner C" class="w-28 sm:w-32" />
-              </div>
-              <div class="flex justify-center opacity-60 transition duration-300 hover:opacity-100 hover:scale-105">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB12VulTqQRG91KMX7mo4ytHN8yL9zpxOLkzg9LmqKnZxDUjLSI8nDgOnyY5acPDksRtzmrF6UfJblkkjZznq_E0EQmow2jDnVNR08NG0kHnN-TL6v8EoW0JvUiekWj9T8U-tXskY03qPOjsxQpg5B5rWUEHe4HVdhm-ZycRxBAX3iGLwj9l5bwobPc3-_M4Wa_3LJ6VnTROhvPT5RQ8LWV5GMhHVNiSfMWSkkr_BnYJ9jjd8xc1fZjUnwwKWBKs8ryaVmT4bsMGZU" alt="Partner D" class="w-28 sm:w-32" />
-              </div>
-              <div class="flex justify-center opacity-60 transition duration-300 hover:opacity-100 hover:scale-105">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLe6QCjr9Kf-73i3FfeWd97glMyqC5s_pfBnuM-0Nj-Z4e8aGLKc_ZH_djJ4DKBUStaDzenCbifhO2TqEQeSfPTsyYSTfy7YQsd-P026aZWmXJBs5B9nwcPWS81Ga_lNVfuoENpolaQZyVkgjrqGGhPUMysir2jgfsfWPLeXKCNbC3uvg1pKmRojSTsoXtP_GorVlNjK1U91aSFGSEpf0u4uqHyVxsWSO6Sgq7zPxnzEtocexc8WbEjl_rHvHnmT-8WGyhOndQUbo" alt="Partner E" class="w-28 sm:w-32" />
+            <div class="partner-carousel">
+              <div class="partner-track">
+                <div class="partner-logo">
+                  <img src="images/joc.png" alt="Japan Open Chain" />
+                </div>
+                <div class="partner-logo">
+                  <img src="images/tokyostar.png" alt="Tokyo Star Bank" />
+                </div>
+                <div class="partner-logo">
+                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="オリックス銀行" />
+                </div>
+                <div class="partner-logo">
+                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="あおぞら銀行" />
+                </div>
+                <div class="partner-logo">
+                  <img src="https://cdn.prod.website-files.com/63bcd69729ab7f3ec1ad210a/64bf04d14176fe2fb1aff258_Nethermind_Light_Horizontal%201.webp" alt="Nethermind" />
+                </div>
+                <div class="partner-logo">
+                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="電通ジャパン" />
+                </div>
+
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="images/joc.png" alt="Japan Open Chain" />
+                </div>
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="images/tokyostar.png" alt="Tokyo Star Bank" />
+                </div>
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="オリックス銀行" />
+                </div>
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="あおぞら銀行" />
+                </div>
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="https://cdn.prod.website-files.com/63bcd69729ab7f3ec1ad210a/64bf04d14176fe2fb1aff258_Nethermind_Light_Horizontal%201.webp" alt="Nethermind" />
+                </div>
+                <div class="partner-logo" aria-hidden="true">
+                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="電通ジャパン" />
+                </div>
               </div>
             </div>
           </div>
@@ -812,9 +1346,8 @@
                 <span class="chip bg-blue-50 text-blue-600 border-blue-100">企業向けホワイトリスト</span>
                 <span class="chip">グローバルタイムゾーン対応</span>
               </div>
-              <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <a href="mailto:bd@stablecoin.io" class="cta-button inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white">営業チームに連絡</a>
-                <a href="https://calendar.app.google/zS86Y9J8y6g2QbQw7" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900">テクニカル相談を予約</a>
+              <div class="flex justify-center">
+                <a href="mailto:bd@stablecoin.io" class="cta-button inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white" data-ja="お問い合わせフォームへ" data-en="Open Inquiry Form">お問い合わせフォームへ</a>
               </div>
             </div>
           </div>
@@ -822,20 +1355,21 @@
       </section>
     </main>
 
-    <footer class="border-t border-slate-200 bg-white/95">
-      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
-        <div class="flex flex-col gap-1">
-          <span class="font-semibold text-slate-900">G.U. CoinStudio</span>
-          <span>Copyright © 2025 G.U.Group, Inc. All rights reserved.</span>
-        </div>
-        <div class="flex flex-wrap items-center gap-4">
-          <a href="#features" class="hover:text-slate-900">製品機能</a>
-          <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:flex"></span>
-          <a href="#architecture" class="hover:text-slate-900">技術構成</a>
-          <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:flex"></span>
-          <a href="#faq" class="hover:text-slate-900">ヘルプセンター</a>
-          <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:flex"></span>
-          <a href="mailto:security@stablecoin.io" class="hover:text-slate-900">セキュリティ連絡</a>
+    <footer class="border-t border-slate-200 bg-white/95 transition-colors">
+      <div class="mx-auto max-w-6xl px-6 py-12">
+        <div class="footer-inner text-sm text-slate-500">
+          <div class="inline-flex items-center gap-3">
+            <span class="footer-logo">GU</span>
+            <div class="text-left">
+              <span class="text-base font-semibold text-slate-900" data-ja="G.U. CoinStudio" data-en="G.U. CoinStudio">G.U. CoinStudio</span>
+              <span class="block text-xs uppercase tracking-[0.32em] text-slate-400" data-ja="Issuance Suite" data-en="Issuance Suite">Issuance Suite</span>
+            </div>
+          </div>
+          <div class="footer-separator"></div>
+          <p class="footer-tagline text-slate-500" data-ja="ステーブルコインの発行・運用・ガバナンスを一貫して支援するエンタープライズ向けシステム。" data-en="Enterprise platform supporting end-to-end stablecoin issuance, operations, and governance.">
+            ステーブルコインの発行・運用・ガバナンスを一貫して支援するエンタープライズ向けシステム。
+          </p>
+          <p class="footer-legal" data-ja="Copyright © 2025 G.U.Group, Inc. All rights reserved." data-en="Copyright © 2025 G.U.Group, Inc. All rights reserved.">Copyright © 2025 G.U.Group, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
@@ -865,6 +1399,224 @@
         shape.style.transform = `translate3d(${offset * (index + 1)}px, ${offset * (index + 0.5)}px, 0)`;
       });
     });
+
+    class LanguageManager {
+      constructor() {
+        this.currentLang = localStorage.getItem('language') || 'ja';
+        this.toggle = document.getElementById('language-toggle');
+        this.menu = document.getElementById('language-menu');
+        this.options = document.querySelectorAll('.lang-option');
+
+        if (!this.toggle || !this.menu) {
+          return;
+        }
+
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.toggle.setAttribute('aria-expanded', 'false');
+        this.updateLanguage();
+      }
+
+      setupEventListeners() {
+        this.toggle.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const isHidden = this.menu.classList.toggle('hidden');
+          this.toggle.setAttribute('aria-expanded', String(!isHidden));
+        });
+
+        document.addEventListener('click', () => {
+          this.closeMenu();
+        });
+
+        this.options.forEach(option => {
+          option.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const lang = option.dataset.lang;
+            this.setLanguage(lang);
+            this.closeMenu();
+          });
+        });
+      }
+
+      closeMenu() {
+        if (!this.menu.classList.contains('hidden')) {
+          this.menu.classList.add('hidden');
+        }
+        this.toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      setLanguage(lang) {
+        this.currentLang = lang;
+        localStorage.setItem('language', lang);
+        this.updateLanguage();
+      }
+
+      updateLanguage() {
+        const currentLangElement = document.getElementById('current-lang');
+        if (currentLangElement) {
+          currentLangElement.textContent = this.currentLang === 'ja' ? '日本語' : 'English';
+        }
+
+        document.querySelectorAll('[data-ja][data-en]').forEach(element => {
+          const text = element.getAttribute(`data-${this.currentLang}`);
+          if (text) {
+            element.textContent = text;
+          }
+        });
+
+        document.documentElement.lang = this.currentLang;
+      }
+    }
+
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.toggleButton = document.getElementById('theme-toggle');
+        this.html = document.documentElement;
+
+        this.html.setAttribute('data-theme', this.currentTheme);
+
+        if (!this.toggleButton) {
+          return;
+        }
+
+        this.init();
+      }
+
+      init() {
+        this.setTheme(this.currentTheme);
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.toggleButton.addEventListener('click', () => {
+          this.toggleTheme();
+        });
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (event) => {
+          if (!localStorage.getItem('theme')) {
+            this.setTheme(event.matches ? 'dark' : 'light');
+          }
+        };
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', handleChange);
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(handleChange);
+        }
+      }
+
+      toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+      }
+
+      setTheme(theme) {
+        this.currentTheme = theme;
+        this.html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        this.updateToggleButton();
+      }
+
+      updateToggleButton() {
+        const isDark = this.currentTheme === 'dark';
+        this.toggleButton.classList.toggle('dark', isDark);
+        this.toggleButton.setAttribute('aria-label', isDark ? 'Toggle light mode' : 'Toggle dark mode');
+      }
+    }
+
+    class ImageCarousel {
+      constructor() {
+        this.carousel = document.querySelector('.image-carousel');
+        if (!this.carousel) {
+          return;
+        }
+
+        this.track = this.carousel.querySelector('.carousel-track');
+        this.totalSlides = this.carousel.querySelectorAll('.carousel-slide').length;
+        if (!this.track || this.totalSlides <= 1) {
+          return;
+        }
+
+        this.currentSlide = 0;
+        this.autoPlayInterval = null;
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.startAutoPlay();
+      }
+
+      setupEventListeners() {
+        const prevBtn = this.carousel.querySelector('.carousel-prev');
+        const nextBtn = this.carousel.querySelector('.carousel-next');
+        const indicators = this.carousel.querySelectorAll('.carousel-indicator');
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', () => this.prevSlide());
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', () => this.nextSlide());
+        }
+
+        indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        this.carousel.addEventListener('mouseenter', () => this.stopAutoPlay());
+        this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+      }
+
+      goToSlide(slideIndex) {
+        if (slideIndex < 0 || slideIndex >= this.totalSlides) {
+          return;
+        }
+
+        this.currentSlide = slideIndex;
+        this.updateCarousel();
+      }
+
+      nextSlide() {
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.updateCarousel();
+      }
+
+      prevSlide() {
+        this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
+      }
+
+      updateCarousel() {
+        this.track.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+
+        const indicators = this.carousel.querySelectorAll('.carousel-indicator');
+        indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === this.currentSlide);
+        });
+      }
+
+      startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => {
+          this.nextSlide();
+        }, 4000);
+      }
+
+      stopAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+          this.autoPlayInterval = null;
+        }
+      }
+    }
 
     // Modern Animation System with Intersection Observer
     class AnimationController {
@@ -1005,13 +1757,18 @@
       }
     }
 
-    // Initialize animation system when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        new AnimationController();
-      });
-    } else {
+    // Initialize interactive components when DOM is ready
+    const initializePage = () => {
+      new ThemeManager();
+      new LanguageManager();
       new AnimationController();
+      new ImageCarousel();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializePage);
+    } else {
+      initializePage();
     }
 
     // Enhanced smooth scrolling for navigation links

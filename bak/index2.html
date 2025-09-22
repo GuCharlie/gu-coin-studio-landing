@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行プラットフォーム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <style>
+    :root {
+      /* Enhanced color system with CSS custom properties */
+      --primary-hue: 220;
+      --primary-saturation: 70%;
+      --primary-lightness: 50%;
+      --accent-hue: 195;
+      --accent-saturation: 85%;
+      --accent-lightness: 55%;
+
+      /* Light theme colors */
+      --bg-primary-light: hsl(var(--primary-hue), 10%, 98%);
+      --bg-secondary-light: hsl(var(--primary-hue), 15%, 96%);
+      --text-primary-light: hsl(var(--primary-hue), 15%, 15%);
+      --text-secondary-light: hsl(var(--primary-hue), 10%, 45%);
+      --text-muted-light: hsl(var(--primary-hue), 8%, 65%);
+
+      /* Dark theme colors */
+      --bg-primary-dark: hsl(var(--primary-hue), 15%, 8%);
+      --bg-secondary-dark: hsl(var(--primary-hue), 12%, 12%);
+      --text-primary-dark: hsl(var(--primary-hue), 15%, 90%);
+      --text-secondary-dark: hsl(var(--primary-hue), 10%, 70%);
+      --text-muted-dark: hsl(var(--primary-hue), 8%, 50%);
+
+      /* Dynamic theme variables - default to light */
+      --bg-primary: var(--bg-primary-light);
+      --bg-secondary: var(--bg-secondary-light);
+      --text-primary: var(--text-primary-light);
+      --text-secondary: var(--text-secondary-light);
+      --text-muted: var(--text-muted-light);
+
+      /* Theme-specific colors */
+      --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+      --accent-color: hsl(var(--accent-hue), var(--accent-saturation), var(--accent-lightness));
+
+      /* Animation timing and easing */
+      --transition-fast: 0.2s;
+      --transition-medium: 0.4s;
+      --transition-slow: 0.8s;
+      --transition-extra-slow: 1.2s;
+
+      /* Modern easing functions */
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+
+      /* Theme transition properties */
+      --theme-transition: background-color var(--transition-medium) var(--ease-out-expo),
+        color var(--transition-medium) var(--ease-out-expo),
+        border-color var(--transition-medium) var(--ease-out-expo),
+        box-shadow var(--transition-medium) var(--ease-out-expo);
+    }
+
+    /* Dark theme overrides */
+    [data-theme="dark"] {
+      --bg-primary: var(--bg-primary-dark);
+      --bg-secondary: var(--bg-secondary-dark);
+      --text-primary: var(--text-primary-dark);
+      --text-secondary: var(--text-secondary-dark);
+      --text-muted: var(--text-muted-dark);
+      --primary-lightness: 65%;
+      --accent-lightness: 60%;
+    }
+
+    /* Global theme transition */
+    *,
+    *::before,
+    *::after {
+      transition: var(--theme-transition);
+    }
+
+    /* Theme Toggle Button Styles */
+    .theme-toggle-btn {
+      position: relative;
+      width: 64px;
+      height: 32px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: var(--theme-transition);
+    }
+
+    .theme-toggle-track {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: var(--theme-transition);
+    }
+
+    .theme-toggle-track.dark {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform var(--transition-medium) var(--ease-out-expo),
+        background-color var(--transition-medium) var(--ease-out-expo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle-thumb.dark {
+      transform: translateX(32px);
+      background: #1e293b;
+    }
+
+    .theme-icon {
+      width: 16px;
+      height: 16px;
+      transition: opacity var(--transition-fast) var(--ease-out-expo);
+    }
+
+    .sun-icon {
+      color: #f59e0b;
+      opacity: 1;
+    }
+
+    .moon-icon {
+      color: #e2e8f0;
+      opacity: 0;
+      position: absolute;
+    }
+
+    .theme-toggle-thumb.dark .sun-icon {
+      opacity: 0;
+    }
+
+    .theme-toggle-thumb.dark .moon-icon {
+      opacity: 1;
+    }
+
+    /* Language Switcher Styles */
+    #language-menu {
+      z-index: 50;
+    }
+
+    [data-theme="dark"] #language-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: var(--text-primary);
+    }
+
+    [data-theme="dark"] #language-menu {
+      background: var(--bg-secondary);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .lang-option {
+      color: var(--text-secondary);
+    }
+
+    [data-theme="dark"] .lang-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.12) 1px, transparent 0);
+      background-size: 46px 46px;
+    }
+
+    /* Enhanced keyframe animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes floatSlow {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+
+      50% {
+        transform: translateY(-12px) scale(1.02);
+      }
+    }
+
+    @keyframes pulseSoft {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes auroraRotate {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    @keyframes driftGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      53%,
+      80%,
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      40%,
+      43% {
+        transform: translate3d(0, -8px, 0);
+      }
+
+      70% {
+        transform: translate3d(0, -4px, 0);
+      }
+
+      90% {
+        transform: translate3d(0, -2px, 0);
+      }
+    }
+
+    @keyframes typewriter {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* Modern animation utilities */
+    .animate-fade-in {
+      animation: fadeIn var(--transition-slow) var(--ease-out-expo) forwards;
+    }
+
+    .animate-slide-up {
+      animation: slideUp var(--transition-slow) var(--ease-out-expo) forwards;
+    }
+
+    .animate-scale-in {
+      animation: scaleIn var(--transition-medium) var(--ease-out-back) forwards;
+    }
+
+    .animate-float {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .animate-pulse-soft {
+      animation: pulseSoft 4s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    /* Enhanced scroll-triggered animations */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .fade-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-card {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal-card.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Intersection Observer triggers */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all var(--transition-slow) var(--ease-out-expo);
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger animation delays */
+    .stagger-1 {
+      --delay: 0.1s;
+    }
+
+    .stagger-2 {
+      --delay: 0.2s;
+    }
+
+    .stagger-3 {
+      --delay: 0.3s;
+    }
+
+    .stagger-4 {
+      --delay: 0.4s;
+    }
+
+    .stagger-5 {
+      --delay: 0.5s;
+    }
+
+    .stagger-6 {
+      --delay: 0.6s;
+    }
+
+    /* Motion sensitivity support */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .animate-float,
+      .animate-pulse-soft,
+      .animate-shimmer {
+        animation: none !important;
+      }
+    }
+
+    @layer components {
+      .card-base {
+        background-color: var(--bg-secondary);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 1.5rem;
+        box-shadow: 0 20px 45px -30px rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(8px);
+      }
+
+      .badge-soft {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        background-color: rgba(59, 130, 246, 0.1);
+        padding: 0.25rem 1rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--primary-color);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        background-color: var(--bg-secondary);
+        padding: 0.25rem 0.875rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .stat-card {
+        @apply card-base;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        min-height: 160px;
+      }
+
+      .feature-card {
+        @apply card-base;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        transition: transform 0.5s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 35px 75px -35px rgba(37, 99, 235, 0.55);
+      }
+    }
+
+    .cta-button {
+      position: relative;
+      overflow: hidden;
+      background-image: linear-gradient(120deg, var(--primary-color), #3b82f6, var(--accent-color));
+      box-shadow: 0 18px 45px -20px rgba(37, 99, 235, 0.55);
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-button:hover::after {
+      opacity: 1;
+    }
+
+    .aurora-layer {
+      position: absolute;
+      inset: -30% -35% auto -35%;
+      height: 120vh;
+      pointer-events: none;
+      background: conic-gradient(from 90deg, rgba(37, 99, 235, 0.22), rgba(14, 165, 233, 0.18), rgba(59, 130, 246, 0.24), rgba(13, 148, 136, 0.18));
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      filter: blur(120px);
+      animation: auroraRotate 120s linear infinite;
+    }
+
+    .gradient-stream {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(37, 99, 235, 0.08), rgba(14, 165, 233, 0.14), rgba(255, 255, 255, 0));
+      background-size: 220% 220%;
+      opacity: 0.65;
+      animation: driftGradient 48s ease-in-out infinite;
+      mix-blend-mode: multiply;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.16), transparent 65%);
+      will-change: transform;
+    }
+
+    .hero-preview {
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+      box-shadow: 0 40px 60px -35px rgba(37, 99, 235, 0.35);
+    }
+
+    .hero-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent 70%);
+      opacity: 0.9;
+    }
+
+    .hero-preview::after {
+      content: '';
+      position: absolute;
+      inset: 18px;
+      border-radius: 28px;
+      border: 1px dashed rgba(100, 116, 139, 0.35);
+    }
+
+    .preview-content {
+      position: relative;
+      z-index: 1;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .preview-window {
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-window::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: linear-gradient(to right, rgba(148, 163, 184, 0.12), rgba(148, 163, 184, 0.05));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .preview-gradient {
+      position: absolute;
+      inset: -40% -20% auto 0;
+      height: 140%;
+      background: conic-gradient(from 180deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.18), rgba(13, 148, 136, 0.18));
+      mix-blend-mode: screen;
+      animation: auroraRotate 36s linear infinite;
+    }
+
+    .preview-placeholder {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background: repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.12) 0px, rgba(148, 163, 184, 0.12) 18px, transparent 18px, transparent 36px);
+    }
+
+    .floating-note {
+      position: absolute;
+      right: 12%;
+      bottom: -32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      background: var(--bg-secondary);
+      box-shadow: 0 24px 50px -28px rgba(37, 99, 235, 0.45);
+      padding: 14px 18px;
+      animation: floatSlow 9s ease-in-out infinite;
+    }
+
+    /* Theme-aware grid background */
+    [data-theme="dark"] .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.25) 1px, transparent 0);
+    }
+
+    /* Dark theme card adjustments */
+    [data-theme="dark"] .card-base {
+      background-color: var(--bg-secondary);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 45px -30px rgba(0, 0, 0, 0.8);
+    }
+
+    [data-theme="dark"] .hero-preview {
+      background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .preview-window {
+      background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .floating-note {
+      background: var(--bg-secondary);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+  </style>
+</head>
+
+<body class="scroll-smooth antialiased"
+  style="font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui; background-color: var(--bg-primary); color: var(--text-primary);">
+  <!-- Theme Toggle Button -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <div class="theme-toggle-track">
+        <div class="theme-toggle-thumb">
+          <svg class="theme-icon sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="theme-icon moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <div class="relative overflow-hidden">
+    <div class="aurora-layer"></div>
+    <div class="gradient-stream"></div>
+    <div class="pointer-events-none absolute inset-0 bg-grid opacity-35"></div>
+    <div class="pointer-events-none shape -top-24 -right-24 h-72 w-72"></div>
+    <div class="pointer-events-none shape top-1/3 -left-32 h-80 w-80"></div>
+
+    <header class="sticky top-0 z-30 backdrop-blur-xl">
+      <div
+        class="mx-auto flex w-full max-w-6xl items-center justify-between rounded-b-3xl border border-slate-100 bg-white/95 px-6 py-4 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)]"
+        style="background-color: var(--bg-secondary); border-color: rgba(148, 163, 184, 0.2);">
+        <a href="#hero" class="flex items-center gap-3">
+          <span
+            class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 font-semibold">GU</span>
+          <div class="flex flex-col leading-tight">
+            <span class="text-base font-semibold" style="color: var(--text-primary);" data-ja="G.U. CoinStudio"
+              data-en="G.U. CoinStudio">G.U. CoinStudio</span>
+            <span class="text-[11px] uppercase tracking-[0.38em]" style="color: var(--text-muted);"
+              data-ja="Issuance Suite" data-en="Issuance Suite">Issuance Suite</span>
+          </div>
+        </a>
+        <nav class="hidden items-center gap-8 text-sm md:flex" style="color: var(--text-secondary);">
+          <a href="#features" class="transition hover:text-slate-900" data-ja="主要機能" data-en="Features">主要機能</a>
+          <a href="#architecture" class="transition hover:text-slate-900" data-ja="アーキテクチャ"
+            data-en="Architecture">アーキテクチャ</a>
+          <a href="#partners" class="transition hover:text-slate-900" data-ja="エコシステム" data-en="Ecosystem">エコシステム</a>
+          <a href="#faq" class="transition hover:text-slate-900" data-ja="FAQ" data-en="FAQ">FAQ</a>
+        </nav>
+        <div class="hidden items-center gap-4 md:flex">
+          <!-- Language Switcher -->
+          <div class="relative">
+            <button id="language-toggle"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-slate-300">
+              <span id="current-lang">日本語</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div id="language-menu"
+              class="absolute right-0 top-full mt-2 hidden w-32 rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+              <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50"
+                data-lang="ja">日本語</button>
+              <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50"
+                data-lang="en">English</button>
+            </div>
+          </div>
+
+          <span class="chip" data-ja="マルチチェーン対応" data-en="Multi-chain Support">マルチチェーン対応</span>
+          <a href="#contact"
+            class="cta-button inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white">
+            <span data-ja="デモを予約" data-en="Book Demo">デモを予約</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M17.25 8.75v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v15a.75.75 0 00.75.75h12a.75.75 0 00.75-.75v-4.5M21 12h-12m0 0l3.75-3.75M9 12l3.75 3.75" />
+            </svg>
+          </a>
+        </div>
+        <button
+          class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 transition hover:text-slate-900 md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="relative">
+      <section id="hero" class="fade-section" data-section style="--delay: 0.05s">
+        <div
+          class="relative mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-24 pt-16 lg:flex-row lg:items-center lg:gap-20">
+          <div class="flex-1 space-y-10">
+            <div class="space-y-5">
+              <span class="badge-soft" data-ja="DeFi向けに再設計" data-en="Redesigned for DeFi">DeFi向けに再設計</span>
+              <h1 class="text-4xl font-semibold leading-tight tracking-tight md:text-5xl"
+                style="color: var(--text-primary);">
+                <span data-ja="発行・流通・ガバナンスまで" data-en="From Issuance to Governance">発行・流通・ガバナンスまで</span>
+                <span
+                  class="block bg-gradient-to-r from-blue-600 via-blue-500 to-teal-400 bg-clip-text text-transparent"
+                  data-ja="次世代ステーブルコイン統合基盤" data-en="Next-Gen Stablecoin Platform">次世代ステーブルコイン統合基盤</span>
+              </h1>
+              <p class="text-base leading-relaxed md:max-w-xl" style="color: var(--text-secondary);"
+                data-ja="G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けプラットフォームです。"
+                data-en="G.U. CoinStudio integrates asset custody, rule engines, and cross-chain payments to launch reliable stablecoin products in minutes - an enterprise platform for the future of digital finance.">
+                G.U. CoinStudioは資産カストディ、ルールエンジン、クロスチェーン決済を統合し、数分で信頼性の高いステーブルコイン商品を立ち上げるためのエンタープライズ向けプラットフォームです。
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#contact"
+                class="cta-button inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white">
+                <span data-ja="プラットフォームに接続" data-en="Connect to Platform">プラットフォームに接続</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M5.25 12h13.5M12 5.25L18.75 12 12 18.75" />
+                </svg>
+              </a>
+              <a href="#features"
+                class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+                style="background-color: var(--bg-secondary); border-color: rgba(148, 163, 184, 0.2); color: var(--text-secondary);">
+                <span data-ja="機能を確認" data-en="View Features">機能を確認</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8m-8 5h4" />
+                </svg>
+              </a>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.1s">
+                <span class="text-sm" style="color: var(--text-secondary);" data-ja="発行リードタイム"
+                  data-en="Issuance Lead Time">発行リードタイム</span>
+                <p class="text-3xl font-semibold" style="color: var(--text-primary);" data-ja="30 分以内"
+                  data-en="Under 30 min">30 分以内</p>
+                <span class="text-sm text-emerald-500/80" data-ja="自動承認 + デプロイ" data-en="Auto Approval + Deploy">自動承認 +
+                  デプロイ</span>
+              </div>
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.2s">
+                <span class="text-sm" style="color: var(--text-secondary);" data-ja="サポートチェーン"
+                  data-en="Supported Chains">サポートチェーン</span>
+                <p class="text-3xl font-semibold" style="color: var(--text-primary);">7+</p>
+                <span class="text-sm" style="color: var(--text-secondary);" data-ja="主要EVMと高速チェーン"
+                  data-en="Major EVM & Fast Chains">主要EVMと高速チェーン</span>
+              </div>
+              <div class="stat-card reveal-card" data-animate style="--delay: 0.3s">
+                <span class="text-sm" style="color: var(--text-secondary);" data-ja="リアルタイム監視"
+                  data-en="Real-time Monitoring">リアルタイム監視</span>
+                <p class="text-3xl font-semibold" style="color: var(--text-primary);">24/7</p>
+                <span class="text-sm" style="color: var(--text-secondary);" data-ja="アラート遅延5秒未満"
+                  data-en="Alert Delay <5s">アラート遅延5秒未満</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative flex-1 space-y-6">
+            <div class="hero-preview">
+              <div class="preview-gradient"></div>
+              <div class="preview-content">
+                <div class="flex items-center justify-between">
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600"
+                    data-ja="ダッシュボードモック" data-en="Dashboard Mock">ダッシュボードモック</span>
+                  <span class="text-[11px] tracking-[0.22em] uppercase" style="color: var(--text-muted);">Snapshot
+                    Ready</span>
+                </div>
+                <div class="preview-window aspect-[16/10]">
+                  <div class="preview-placeholder">
+                    <img src="csdemo1.png" alt="G.U. CoinStudio" class="max-w-full max-h-full rounded-xl shadow" />
+                  </div>
+                </div>
+                <p class="text-xs" style="color: var(--text-secondary);" data-ja="G.U. CoinStudioユーザーアプリ画面"
+                  data-en="G.U. CoinStudio User App Interface">G.U. CoinStudioユーザーアプリ画面</p>
+              </div>
+            </div>
+            <div class="floating-note">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-blue-600 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                </svg>
+              </span>
+              <div class="flex flex-col">
+                <span class="text-sm font-semibold" style="color: var(--text-primary);" data-ja="ライブデータ同期"
+                  data-en="Live Data Sync">ライブデータ同期</span>
+                <span class="text-xs" style="color: var(--text-secondary);" data-ja="グラフと指標をAPIで自動更新"
+                  data-en="Auto-update charts via API">グラフと指標をAPIで自動更新</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <! -- Features Section -->
+        <section id="features" class="fade-section" data-section style="--delay: 0.1s">
+          <div class="mx-auto max-w-6xl px-6 pb-24">
+            <div class="mx-auto max-w-3xl text-center space-y-4">
+              <span class="badge-soft" data-ja="主要機能" data-en="Key Features">主要機能</span>
+              <h2 class="text-3xl font-semibold md:text-4xl" style="color: var(--text-primary);"
+                data-ja="発行からガバナンスまでを単一ダッシュボードで統合管理" data-en="Unified Management from Issuance to Governance">
+                発行からガバナンスまでを単一ダッシュボードで統合管理</h2>
+              <p class="text-base" style="color: var(--text-secondary);"
+                data-ja="成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。"
+                data-en="Combine modules according to growth phases to build operational systems that balance transparency and usability.">
+                成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。</p>
+            </div>
+            <div class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.05s">
+                <div class="flex items-center gap-3 text-blue-600">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="柔軟な発行ワークフロー"
+                    data-en="Flexible Issuance Workflow">柔軟な発行ワークフロー</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。"
+                  data-en="Visual configuration of collateral thresholds, issuance limits, and approval flows. Balance phased releases with automation.">
+                  担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip bg-blue-50 text-blue-600 border-blue-100" data-ja="ルールエンジン"
+                    data-en="Rule Engine">ルールエンジン</span>
+                  <span class="chip" data-ja="ロール管理" data-en="Role Management">ロール管理</span>
+                </div>
+              </article>
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.1s">
+                <div class="flex items-center gap-3 text-cyan-600">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 10h11M9 21V3m3 18l9-9-9-9" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="クロスチェーン流動性"
+                    data-en="Cross-chain Liquidity">クロスチェーン流動性</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。"
+                  data-en="Bridge adapters for major chains and Layer2, with automatic optimization of liquidity distribution and fees.">
+                  主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip bg-cyan-50 text-cyan-600 border-cyan-100" data-ja="7+ チェーン" data-en="7+ Chains">7+
+                    チェーン</span>
+                  <span class="chip" data-ja="リアルタイム監視" data-en="Real-time Monitoring">リアルタイム監視</span>
+                </div>
+              </article>
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.15s">
+                <div class="flex items-center gap-3 text-emerald-600">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="監査 & コンプライアンス"
+                    data-en="Audit & Compliance">監査 & コンプライアンス</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。"
+                  data-en="Automatically generate fund flows, audit trails, and risk reports for secure stakeholder sharing.">
+                  資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip bg-emerald-50 text-emerald-600 border-emerald-100" data-ja="自動レポート"
+                    data-en="Auto Reports">自動レポート</span>
+                  <span class="chip" data-ja="リスクアラート" data-en="Risk Alerts">リスクアラート</span>
+                </div>
+              </article>
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.2s">
+                <div class="flex items-center gap-3 text-fuchsia-600">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fuchsia-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9.75 17L9 21l-1.47-3.92M9.75 17h4.5M9.75 17L12 3.75 14.25 17m0 0H18l-1.47 3.92L15 17" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="ガバナンスダッシュボード"
+                    data-en="Governance Dashboard">ガバナンスダッシュボード</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。"
+                  data-en="Define voting parameters with DAO templates, providing on-chain execution and auditable history management.">
+                  DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip" data-ja="オンチェーン実行" data-en="On-chain Execution">オンチェーン実行</span>
+                  <span class="chip bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100" data-ja="リアルタイム分析"
+                    data-en="Real-time Analytics">リアルタイム分析</span>
+                </div>
+              </article>
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.25s">
+                <div class="flex items-center gap-3 text-amber-500">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 7l9-4 9 4-9 4-9-4zm0 6l9 4 9-4m-9 4v6" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="API と SDK"
+                    data-en="API & SDK">API と SDK</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。"
+                  data-en="SDKs for JavaScript, Rust, and Python enable rapid integration with existing systems. Build wallets and payment services quickly.">
+                  JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip">API</span>
+                  <span class="chip bg-amber-50 text-amber-600 border-amber-100">SDK</span>
+                </div>
+              </article>
+              <article class="feature-card reveal-card" data-animate style="--delay: 0.3s">
+                <div class="flex items-center gap-3 text-sky-600">
+                  <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </span>
+                  <h3 class="text-xl font-semibold" style="color: var(--text-primary);" data-ja="自動ロールバック"
+                    data-en="Auto Rollback">自動ロールバック</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);"
+                  data-ja="異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。"
+                  data-en="Instantly freeze affected areas upon anomaly detection, automatically execute recovery procedures and communication flows to ensure business continuity.">
+                  異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。</p>
+                <div class="flex items-center gap-2 text-xs" style="color: var(--text-muted);">
+                  <span class="chip bg-sky-50 text-sky-600 border-sky-100" data-ja="冗長構成"
+                    data-en="Redundant Config">冗長構成</span>
+                  <span class="chip" data-ja="リスク制御" data-en="Risk Control">リスク制御</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section id="architecture" class="fade-section" data-section style="--delay: 0.12s">
+          <div class="mx-auto max-w-6xl px-6 pb-24">
+            <div class="card-base relative overflow-hidden p-10">
+              <div class="absolute -left-12 top-16 h-48 w-48 rounded-full bg-blue-100 blur-3xl"></div>
+              <div class="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div class="space-y-6">
+                  <span class="badge-soft" data-ja="アーキテクチャ" data-en="Architecture">アーキテクチャ</span>
+                  <h2 class="text-3xl font-semibold md:text-4xl" style="color: var(--text-primary);"
+                    data-ja="三層構造で性能・透明性・安全性を両立"
+                    data-en="Three-tier Architecture Balancing Performance, Transparency & Security">三層構造で性能・透明性・安全性を両立
+                  </h2>
+                  <p class="text-base" style="color: var(--text-secondary);"
+                    data-ja="アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。"
+                    data-en="Separate access, service, and on-chain layers to achieve rapid releases while meeting compliance requirements.">
+                    アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。</p>
+                  <div class="grid gap-5 text-sm" style="color: var(--text-secondary);">
+                    <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.05s">
+                      <div
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">
+                        1</div>
+                      <div>
+                        <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="アクセス層"
+                          data-en="Access Layer">アクセス層</h3>
+                        <p class="mt-1" data-ja="管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。"
+                          data-en="Provides management console, API gateway, and SDKs with centralized authentication, authorization, and operation logs.">
+                          管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.1s">
+                      <div
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">
+                        2</div>
+                      <div>
+                        <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="サービス層"
+                          data-en="Service Layer">サービス層</h3>
+                        <p class="mt-1" data-ja="発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。"
+                          data-en="Microservice architecture for issuance rules, settlement, and risk monitoring with high availability.">
+                          発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.15s">
+                      <div
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">
+                        3</div>
+                      <div>
+                        <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="オンチェーン層"
+                          data-en="On-chain Layer">オンチェーン層</h3>
+                        <p class="mt-1" data-ja="DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。"
+                          data-en="Template-based DAO governance, cross-chain payments, and bridge compatibility for secure scaling.">
+                          DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-base relative overflow-hidden p-8">
+                  <div class="absolute -top-16 right-0 h-44 w-44 rounded-full bg-cyan-100 blur-3xl"></div>
+                  <div class="relative space-y-6 text-sm" style="color: var(--text-secondary);">
+                    <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="運用ベストプラクティス"
+                      data-en="Operational Best Practices">運用ベストプラクティス</h3>
+                    <ul class="space-y-3">
+                      <li class="flex items-start gap-3">
+                        <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+                        <span data-ja="サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。"
+                          data-en="Containerize services independently with message bus integration to minimize interference during scaling.">サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。</span>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                        <span data-ja="Vault等で鍵管理、多重署名でチェーン上の操作を保護。"
+                          data-en="Key management with Vault and multi-signature protection for on-chain operations.">Vault等で鍵管理、多重署名でチェーン上の操作を保護。</span>
+                      </li>
+                      <li class="flex items-start gap-3">
+                        <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                        <span data-ja="Prometheus + Grafanaで指標を可視化し、アラートを自動化。"
+                          data-en="Visualize metrics with Prometheus + Grafana and automate alerts.">Prometheus +
+                          Grafanaで指標を可視化し、アラートを自動化。</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="fade-section" data-section style="--delay: 0.14s">
+          <div class="mx-auto max-w-4xl px-6 pb-24">
+            <div class="text-center space-y-4 mb-12">
+              <span class="badge-soft">FAQ</span>
+              <h2 class="text-3xl font-semibold md:text-4xl" style="color: var(--text-primary);" data-ja="よくある質問"
+                data-en="Frequently Asked Questions">よくある質問</h2>
+              <p class="text-base" style="color: var(--text-secondary);" data-ja="G.U. CoinStudioについてのよくある質問にお答えします。"
+                data-en="Answers to frequently asked questions about G.U. CoinStudio.">G.U.
+                CoinStudioについてのよくある質問にお答えします。</p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="card-base p-6 reveal-card" data-animate style="--delay: 0.05s">
+                <button class="faq-toggle w-full text-left flex items-center justify-between">
+                  <h3 class="text-lg font-semibold" style="color: var(--text-primary);"
+                    data-ja="どのようなブロックチェーンに対応していますか？" data-en="Which blockchains are supported?">どのようなブロックチェーンに対応していますか？
+                  </h3>
+                  <svg class="faq-icon h-5 w-5 transition-transform" style="color: var(--text-secondary);" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="faq-content hidden mt-4">
+                  <p style="color: var(--text-secondary);"
+                    data-ja="Ethereum、Polygon、Arbitrum、Optimism、BSC、Avalanche、Solanaなど主要なブロックチェーンに対応しています。新しいチェーンへの対応も継続的に追加されています。"
+                    data-en="We support major blockchains including Ethereum, Polygon, Arbitrum, Optimism, BSC, Avalanche, and Solana. Support for new chains is continuously being added.">
+                    Ethereum、Polygon、Arbitrum、Optimism、BSC、Avalanche、Solanaなど主要なブロックチェーンに対応しています。新しいチェーンへの対応も継続的に追加されています。
+                  </p>
+                </div>
+              </div>
+
+              <div class="card-base p-6 reveal-card" data-animate style="--delay: 0.1s">
+                <button class="faq-toggle w-full text-left flex items-center justify-between">
+                  <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="セキュリティ対策はどのようになっていますか？"
+                    data-en="What security measures are in place?">セキュリティ対策はどのようになっていますか？</h3>
+                  <svg class="faq-icon h-5 w-5 transition-transform" style="color: var(--text-secondary);" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="faq-content hidden mt-4">
+                  <p style="color: var(--text-secondary);"
+                    data-ja="多重署名ウォレット、ハードウェアセキュリティモジュール（HSM）、定期的なセキュリティ監査、リアルタイム監視システムを採用しています。また、すべてのスマートコントラクトは複数の監査機関による検証を受けています。"
+                    data-en="We employ multi-signature wallets, Hardware Security Modules (HSM), regular security audits, and real-time monitoring systems. All smart contracts are verified by multiple audit firms.">
+                    多重署名ウォレット、ハードウェアセキュリティモジュール（HSM）、定期的なセキュリティ監査、リアルタイム監視システムを採用しています。また、すべてのスマートコントラクトは複数の監査機関による検証を受けています。
+                  </p>
+                </div>
+              </div>
+
+              <div class="card-base p-6 reveal-card" data-animate style="--delay: 0.15s">
+                <button class="faq-toggle w-full text-left flex items-center justify-between">
+                  <h3 class="text-lg font-semibold" style="color: var(--text-primary);" data-ja="導入にはどのくらいの時間がかかりますか？"
+                    data-en="How long does implementation take?">導入にはどのくらいの時間がかかりますか？</h3>
+                  <svg class="faq-icon h-5 w-5 transition-transform" style="color: var(--text-secondary);" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div class="faq-content hidden mt-4">
+                  <p style="color: var(--text-secondary);"
+                    data-ja="基本的な設定であれば30分以内で完了します。カスタマイズが必要な場合でも、通常1-2週間で本格運用を開始できます。専任のサポートチームが導入をサポートします。"
+                    data-en="Basic setup can be completed within 30 minutes. Even with customization needs, full operation typically begins within 1-2 weeks. A dedicated support team assists with implementation.">
+                    基本的な設定であれば30分以内で完了します。カスタマイズが必要な場合でも、通常1-2週間で本格運用を開始できます。専任のサポートチームが導入をサポートします。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="fade-section" data-section style="--delay: 0.16s">
+          <div class="mx-auto max-w-4xl px-6 pb-24">
+            <div class="card-base p-12 text-center space-y-8">
+              <div class="space-y-4">
+                <h2 class="text-3xl font-semibold md:text-4xl" style="color: var(--text-primary);" data-ja="今すぐ始めましょう"
+                  data-en="Get Started Today">今すぐ始めましょう</h2>
+                <p class="text-lg" style="color: var(--text-secondary);"
+                  data-ja="G.U. CoinStudioで次世代のステーブルコイン事業を構築しませんか？"
+                  data-en="Ready to build the next generation of stablecoin business with G.U. CoinStudio?">G.U.
+                  CoinStudioで次世代のステーブルコイン事業を構築しませんか？</p>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#"
+                  class="cta-button inline-flex items-center gap-2 rounded-full px-8 py-4 text-lg font-semibold text-white">
+                  <span data-ja="デモを予約" data-en="Book Demo">デモを予約</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M17.25 8.75v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v15a.75.75 0 00.75.75h12a.75.75 0 00.75-.75v-4.5M21 12h-12m0 0l3.75-3.75M9 12l3.75 3.75" />
+                  </svg>
+                </a>
+                <a href="#"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 text-lg font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+                  style="background-color: var(--bg-secondary); border-color: rgba(148, 163, 184, 0.2); color: var(--text-secondary);">
+                  <span data-ja="資料をダウンロード" data-en="Download Materials">資料をダウンロード</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+    </main>
+  </div>
+
+  <script>
+    // Language Manager
+    class LanguageManager {
+      constructor() {
+        this.currentLang = localStorage.getItem('language') || 'ja';
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.updateLanguage();
+      }
+
+      setupEventListeners() {
+        const toggle = document.getElementById('language-toggle');
+        const menu = document.getElementById('language-menu');
+        const options = document.querySelectorAll('.lang-option');
+
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => {
+          menu.classList.add('hidden');
+        });
+
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const lang = option.dataset.lang;
+            this.setLanguage(lang);
+            menu.classList.add('hidden');
+          });
+        });
+      }
+
+      setLanguage(lang) {
+        this.currentLang = lang;
+        localStorage.setItem('language', lang);
+        this.updateLanguage();
+      }
+
+      updateLanguage() {
+        const currentLangElement = document.getElementById('current-lang');
+        currentLangElement.textContent = this.currentLang === 'ja' ? '日本語' : 'English';
+
+        // Update all elements with data-ja and data-en attributes
+        document.querySelectorAll('[data-ja][data-en]').forEach(element => {
+          const text = element.getAttribute(`data-${this.currentLang}`);
+          if (text) {
+            element.textContent = text;
+          }
+        });
+
+        // Update document language
+        document.documentElement.lang = this.currentLang;
+      }
+    }
+
+    // Theme Management System
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.toggleButton = document.getElementById('theme-toggle');
+        this.html = document.documentElement;
+        this.init();
+      }
+
+      init() {
+        this.setTheme(this.currentTheme);
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.toggleButton.addEventListener('click', () => {
+          this.toggleTheme();
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            this.setTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
+
+      toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+      }
+
+      setTheme(theme) {
+        this.currentTheme = theme;
+        this.html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        this.updateToggleButton();
+      }
+
+      updateToggleButton() {
+        const track = this.toggleButton.querySelector('.theme-toggle-track');
+        const thumb = this.toggleButton.querySelector('.theme-toggle-thumb');
+
+        if (this.currentTheme === 'dark') {
+          track.classList.add('dark');
+          thumb.classList.add('dark');
+        } else {
+          track.classList.remove('dark');
+          thumb.classList.remove('dark');
+        }
+      }
+    }
+
+    // Enhanced Intersection Observer for animations
+    class AnimationManager {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        this.setupIntersectionObserver();
+        this.setupCounterAnimations();
+        this.setupFAQToggles();
+      }
+
+      setupIntersectionObserver() {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+
+              // Trigger counter animations for stat cards
+              if (entry.target.classList.contains('stat-card')) {
+                this.animateCounters(entry.target);
+              }
+            }
+          });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-section, .reveal-card').forEach(el => {
+          observer.observe(el);
+        });
+      }
+
+      setupCounterAnimations() {
+        // Counter animation will be triggered by intersection observer
+      }
+
+      animateCounters(card) {
+        const numberElement = card.querySelector('.text-3xl');
+        if (!numberElement || numberElement.dataset.animated) return;
+
+        const text = numberElement.textContent;
+        const number = parseInt(text.match(/\d+/)?.[0]);
+
+        if (number) {
+          numberElement.dataset.animated = 'true';
+          let current = 0;
+          const increment = number / 30;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= number) {
+              current = number;
+              clearInterval(timer);
+            }
+            numberElement.textContent = text.replace(/\d+/, Math.floor(current));
+          }, 50);
+        }
+      }
+
+      setupFAQToggles() {
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+          toggle.addEventListener('click', () => {
+            const content = toggle.nextElementSibling;
+            const icon = toggle.querySelector('.faq-icon');
+
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden')
+              ? 'rotate(0deg)'
+              : 'rotate(180deg)';
+          });
+        });
+      }
+    }
+
+    // Parallax and scroll effects
+    function initParallaxEffects() {
+      let ticking = false;
+
+      const updateParallax = () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.aurora-layer, .gradient-stream');
+
+        parallaxElements.forEach((element, index) => {
+          const speed = 0.5 + (index * 0.2);
+          const yPos = -(scrolled * speed);
+          element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      });
+    }
+
+    // Enhanced smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Initialize all systems
+    window.addEventListener('load', () => {
+      // Initialize managers
+      new LanguageManager();
+      new ThemeManager();
+      new AnimationManager();
+
+      // Initialize effects
+      initParallaxEffects();
+
+      // Trigger initial animations
+      setTimeout(() => {
+        document.querySelectorAll('.fade-section').forEach((el, index) => {
+          setTimeout(() => {
+            el.classList.add('is-visible');
+          }, index * 100);
+        });
+      }, 100);
+    });
+  </script>
+</body>
+
+</html>
