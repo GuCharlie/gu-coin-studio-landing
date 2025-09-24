@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>G.U. CoinStudio — 信頼できるステーブルコイン発行システム</title>
+  <title data-ja="G.U. CoinStudio — 信頼できるステーブルコイン発行システム" data-en="G.U. CoinStudio — Trusted Stablecoin Issuance Platform">G.U. CoinStudio — 信頼できるステーブルコイン発行システム</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -73,6 +73,42 @@
     .bg-grid {
       background-image: radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.12) 1px, transparent 0);
       background-size: 46px 46px;
+    }
+
+    .header-logo {
+      display: inline-block;
+      height: 2.5rem;
+      width: 90%;
+    }
+
+    .header-logo-dark {
+      display: none;
+      height: 2.5rem;
+      width: 90%;
+    }
+
+    [data-theme="dark"] .header-logo-light {
+      display: none;
+    }
+
+    [data-theme="dark"] .header-logo-dark {
+      display: inline-block;
+    }
+
+    .summary-text {
+      flex: 1;
+    }
+
+    .mobile-menu {
+      transition: opacity var(--transition-fast) ease;
+    }
+
+    .mobile-menu-panel nav a {
+      color: rgba(71, 85, 105, 0.9);
+    }
+
+    .mobile-menu-panel nav a:hover {
+      color: #0f172a;
     }
 
     /* Enhanced keyframe animations */
@@ -626,6 +662,11 @@
       box-shadow: 0 18px 40px -26px rgba(79, 70, 229, 0.55);
     }
 
+    [data-theme="dark"] #language-toggle:hover {
+      border-color: rgba(165, 180, 252, 0.55);
+      color: rgba(248, 250, 252, 0.94);
+    }
+
     [data-theme="dark"] #language-menu {
       background: rgba(8, 12, 26, 0.95);
       border-color: rgba(79, 70, 229, 0.35);
@@ -638,6 +679,28 @@
 
     [data-theme="dark"] .lang-option:hover {
       background: rgba(99, 102, 241, 0.2);
+    }
+
+    [data-theme="dark"] .header-bar nav a {
+      color: rgba(226, 232, 240, 0.78);
+    }
+
+    [data-theme="dark"] .header-bar nav a:hover {
+      color: #f8fafc;
+    }
+
+    [data-theme="dark"] .mobile-menu-panel {
+      background: rgba(8, 12, 26, 0.92);
+      border-color: rgba(99, 102, 241, 0.32);
+      box-shadow: 0 35px 85px -38px rgba(30, 64, 175, 0.65);
+    }
+
+    [data-theme="dark"] .mobile-menu-panel nav a {
+      color: rgba(226, 232, 240, 0.78);
+    }
+
+    [data-theme="dark"] .mobile-menu-panel nav a:hover {
+      color: #f8fafc;
     }
 
     [data-theme="dark"] .theme-toggle-icon {
@@ -919,12 +982,9 @@
 
     <header class="sticky top-0 z-30 backdrop-blur-xl">
       <div class="header-bar mx-auto flex w-full max-w-6xl items-center justify-between rounded-b-3xl border border-slate-100 bg-white/95 px-6 py-4 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)]">
-        <a href="#hero" class="flex items-center gap-3">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 font-semibold">GU</span>
-          <div class="flex flex-col leading-tight">
-            <span class="text-base font-semibold text-slate-900" data-ja="G.U. CoinStudio" data-en="G.U. CoinStudio">G.U. CoinStudio</span>
-            <span class="text-[11px] uppercase tracking-[0.38em] text-slate-400" data-ja="Issuance Suite" data-en="Issuance Suite">Issuance Suite</span>
-          </div>
+        <a href="#hero" class="flex items-center">
+          <img src="images/G.U. Coin Studio-logo.svg" alt="G.U. Coin Studio" class="header-logo header-logo-light" />
+          <img src="images/G.U. Coin Studio-logo_w.svg" alt="" class="header-logo header-logo-dark" aria-hidden="true" />
         </a>
         <nav class="hidden items-center gap-8 text-sm text-slate-500 md:flex">
           <a href="#features" class="transition hover:text-slate-900" data-ja="主要機能" data-en="Features">主要機能</a>
@@ -953,11 +1013,33 @@
             <button class="lang-option w-full px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50" data-lang="en">English</button>
           </div>
         </div>
-        <button class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 transition hover:text-slate-900 md:hidden">
+        <button id="mobile-menu-toggle" class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 transition hover:text-slate-900 md:hidden" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
+      </div>
+      <div id="mobile-menu" class="mobile-menu hidden px-6 md:hidden">
+        <div class="mobile-menu-panel mx-auto w-full max-w-6xl rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-[0_28px_60px_-30px_rgba(15,23,42,0.35)]">
+          <nav class="flex flex-col gap-4 text-sm font-medium text-slate-600">
+            <a href="#features" class="flex items-center justify-between gap-3 transition hover:text-slate-900"><span data-ja="主要機能" data-en="Features">主要機能</span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg></a>
+            <a href="#architecture" class="flex items-center justify-between gap-3 transition hover:text-slate-900"><span data-ja="アーキテクチャ" data-en="Architecture">アーキテクチャ</span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg></a>
+            <a href="#partners" class="flex items-center justify-between gap-3 transition hover:text-slate-900"><span data-ja="エコシステム" data-en="Ecosystem">エコシステム</span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg></a>
+            <a href="#faq" class="flex items-center justify-between gap-3 transition hover:text-slate-900"><span data-ja="FAQ" data-en="FAQ">FAQ</span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" /></svg></a>
+          </nav>
+          <div class="my-5 h-px bg-slate-200/80"></div>
+          <div class="flex flex-col gap-3">
+            <a href="#contact" class="cta-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white">
+              <span data-ja="デモを予約" data-en="Book Demo">デモを予約</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 12h13.5M12 5.25L18.75 12 12 18.75" />
+              </svg>
+            </a>
+            <a href="https://www.gu-group.com/ja/contact/" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900" data-ja-href="https://www.gu-group.com/ja/contact/" data-en-href="https://www.gu-group.com/contact/">
+              <span data-ja="お問い合わせフォームへ" data-en="Open Inquiry Form">お問い合わせフォームへ</span>
+            </a>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -991,19 +1073,19 @@
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div class="stat-card reveal-card" data-animate style="--delay: 0.1s">
-                <span class="text-sm text-slate-500">発行リードタイム</span>
-                <p class="text-3xl font-semibold text-slate-900">30 分以内</p>
-                <span class="text-sm text-emerald-500/80">自動承認 + デプロイ</span>
+                <span class="text-sm text-slate-500" data-ja="発行リードタイム" data-en="Issuance lead time">発行リードタイム</span>
+                <p class="text-3xl font-semibold text-slate-900" data-ja="30 分以内" data-en="Within 30 minutes">30 分以内</p>
+                <span class="text-sm text-emerald-500/80" data-ja="自動承認 + デプロイ" data-en="Automated approval + deploy">自動承認 + デプロイ</span>
               </div>
               <div class="stat-card reveal-card" data-animate style="--delay: 0.2s">
-                <span class="text-sm text-slate-500">サポートチェーン</span>
-                <p class="text-3xl font-semibold text-slate-900">7+</p>
-                <span class="text-sm text-slate-500">主要EVMと高速チェーン</span>
+                <span class="text-sm text-slate-500" data-ja="サポートチェーン" data-en="Supported chains">サポートチェーン</span>
+                <p class="text-3xl font-semibold text-slate-900" data-ja="7+" data-en="7+">7+</p>
+                <span class="text-sm text-slate-500" data-ja="主要EVMと高速チェーン" data-en="Major EVM and high-speed chains">主要EVMと高速チェーン</span>
               </div>
               <div class="stat-card reveal-card" data-animate style="--delay: 0.3s">
-                <span class="text-sm text-slate-500">リアルタイム監視</span>
-                <p class="text-3xl font-semibold text-slate-900">24/7</p>
-                <span class="text-sm text-slate-500">アラート遅延5秒未満</span>
+                <span class="text-sm text-slate-500" data-ja="リアルタイム監視" data-en="Real-time monitoring">リアルタイム監視</span>
+                <p class="text-3xl font-semibold text-slate-900" data-ja="24/7" data-en="24/7">24/7</p>
+                <span class="text-sm text-slate-500" data-ja="アラート遅延5秒未満" data-en="Alerts under 5 seconds">アラート遅延5秒未満</span>
               </div>
             </div>
           </div>
@@ -1012,7 +1094,7 @@
               <div class="preview-gradient"></div>
               <div class="preview-content">
                 <div class="flex items-center justify-between">
-                  <span class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">ダッシュボードモック</span>
+                  <span class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600" data-ja="ダッシュボードモック" data-en="Dashboard mock">ダッシュボードモック</span>
                   <span class="text-[11px] tracking-[0.22em] text-slate-400 uppercase">Snapshot Ready</span>
                 </div>
                 <div class="preview-window aspect-[16/10]">
@@ -1020,17 +1102,17 @@
                     <div class="carousel-track flex h-full transition-transform duration-500 ease-in-out">
                       <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
                         <div class="absolute inset-0 flex items-center justify-center">
-                          <img src="images/csdemo1.png" alt="G.U. CoinStudio ダッシュボード画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                          <img src="images/csdemo1.png" alt="G.U. CoinStudio dashboard screen" class="max-h-full w-auto rounded-2xl shadow-xl" />
                         </div>
                       </div>
                       <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
                         <div class="absolute inset-0 flex items-center justify-center">
-                          <img src="images/csdemo2.png" alt="G.U. CoinStudio ユーザー画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                          <img src="images/csdemo2.png" alt="G.U. CoinStudio user screen" class="max-h-full w-auto rounded-2xl shadow-xl" />
                         </div>
                       </div>
                       <div class="carousel-slide flex-shrink-0 w-full h-full relative bg-slate-100">
                         <div class="absolute inset-0 flex items-center justify-center">
-                          <img src="images/csdemo3.png" alt="G.U. CoinStudio 管理画面" class="max-h-full w-auto rounded-2xl shadow-xl" />
+                          <img src="images/csdemo3.png" alt="G.U. CoinStudio admin screen" class="max-h-full w-auto rounded-2xl shadow-xl" />
                         </div>
                       </div>
                     </div>
@@ -1050,7 +1132,7 @@
                     </button>
                   </div>
                 </div>
-                <p class="text-xs text-slate-500">スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。</p>
+                <p class="text-xs text-slate-500" data-ja="スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。" data-en="Swap screenshots to instantly align the hero with your product.">スクリーンショットを差し替えるだけで即座にプロダクト連動のヒーローを構築できます。</p>
               </div>
             </div>
             <div class="floating-note">
@@ -1060,8 +1142,8 @@
                 </svg>
               </span>
               <div class="flex flex-col">
-                <span class="text-sm font-semibold text-slate-900">ライブデータ同期</span>
-                <span class="text-xs text-slate-500">グラフと指標をAPIで自動更新</span>
+                <span class="text-sm font-semibold text-slate-900" data-ja="ライブデータ同期" data-en="Live data sync">ライブデータ同期</span>
+                <span class="text-xs text-slate-500" data-ja="グラフと指標をAPIで自動更新" data-en="Auto-refresh charts and metrics via API">グラフと指標をAPIで自動更新</span>
               </div>
             </div>
           </div>
@@ -1072,9 +1154,9 @@
 <section id="features" class="fade-section" data-section style="--delay: 0.1s">
         <div class="mx-auto max-w-6xl px-6 pb-24">
           <div class="mx-auto max-w-3xl text-center space-y-4">
-            <span class="badge-soft">主要機能</span>
-            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">発行からガバナンスまでを単一ダッシュボードで統合管理</h2>
-            <p class="text-base text-slate-600">成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。</p>
+            <span class="badge-soft" data-ja="主要機能" data-en="Core features">主要機能</span>
+            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900" data-ja="発行からガバナンスまでを単一ダッシュボードで統合管理" data-en="Unified dashboard for everything from issuance to governance">発行からガバナンスまでを単一ダッシュボードで統合管理</h2>
+            <p class="text-base text-slate-600" data-ja="成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。" data-en="Combine modules for each growth phase to build operations that balance transparency with control.">成長フェーズに応じてモジュールを組み合わせ、透明性と操作性を両立させた運用体制を構築できます。</p>
           </div>
           <div class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <article class="feature-card reveal-card" data-animate style="--delay: 0.05s">
@@ -1084,12 +1166,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m6-6H6" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">柔軟な発行ワークフロー</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="柔軟な発行ワークフロー" data-en="Flexible issuance workflows">柔軟な発行ワークフロー</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。" data-en="Visually configure collateral thresholds, issuance caps, and approval flows to balance staged rollouts with automation.">担保閾値、発行上限、承認フローをビジュアル設定。段階的リリースと自動化を両立させます。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span class="chip bg-blue-50 text-blue-600 border-blue-100">ルールエンジン</span>
-                <span class="chip">ロール管理</span>
+                <span class="chip bg-blue-50 text-blue-600 border-blue-100" data-ja="ルールエンジン" data-en="Rule engine">ルールエンジン</span>
+                <span class="chip" data-ja="ロール管理" data-en="Role management">ロール管理</span>
               </div>
             </article>
             <article class="feature-card reveal-card" data-animate style="--delay: 0.1s">
@@ -1099,12 +1181,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h11M9 21V3m3 18l9-9-9-9" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">クロスチェーン流動性</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="クロスチェーン流動性" data-en="Cross-chain liquidity">クロスチェーン流動性</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。" data-en="Bridge adapters for major chains and L2s automatically optimize liquidity allocation and fees.">主要チェーンとLayer2に対応したブリッジアダプタを搭載し、流動性配分と手数料を自動最適化。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span class="chip bg-cyan-50 text-cyan-600 border-cyan-100">7+ チェーン</span>
-                <span class="chip">リアルタイム監視</span>
+                <span class="chip bg-cyan-50 text-cyan-600 border-cyan-100" data-ja="7+ チェーン" data-en="7+ chains">7+ チェーン</span>
+                <span class="chip" data-ja="リアルタイム監視" data-en="Real-time monitoring">リアルタイム監視</span>
               </div>
             </article>
             <article class="feature-card reveal-card" data-animate style="--delay: 0.15s">
@@ -1114,12 +1196,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">監査 & コンプライアンス</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="監査 & コンプライアンス" data-en="Audit &amp; compliance">監査 & コンプライアンス</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。" data-en="Automatically generate fund flows, audit trails, and risk reports for secure stakeholder sharing.">資金フロー、監査証跡、リスクレポートを自動生成し、ステークホルダーと安全に共有できます。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span class="chip bg-emerald-50 text-emerald-600 border-emerald-100">自動レポート</span>
-                <span class="chip">リスクアラート</span>
+                <span class="chip bg-emerald-50 text-emerald-600 border-emerald-100" data-ja="自動レポート" data-en="Automated reports">自動レポート</span>
+                <span class="chip" data-ja="リスクアラート" data-en="Risk alerts">リスクアラート</span>
               </div>
             </article>
             <article class="feature-card reveal-card" data-animate style="--delay: 0.2s">
@@ -1129,12 +1211,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 21l-1.47-3.92M9.75 17h4.5M9.75 17L12 3.75 14.25 17m0 0H18l-1.47 3.92L15 17" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">ガバナンスダッシュボード</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="ガバナンスダッシュボード" data-en="Governance dashboard">ガバナンスダッシュボード</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。" data-en="Define voting parameters with DAO templates to support on-chain execution and auditable history.">DAOテンプレートで投票パラメータを定義し、オンチェーン実行と監査性の高い履歴管理を提供。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span class="chip">オンチェーン実行</span>
-                <span class="chip bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100">リアルタイム分析</span>
+                <span class="chip" data-ja="オンチェーン実行" data-en="On-chain execution">オンチェーン実行</span>
+                <span class="chip bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100" data-ja="リアルタイム分析" data-en="Real-time analytics">リアルタイム分析</span>
               </div>
             </article>
             <article class="feature-card reveal-card" data-animate style="--delay: 0.25s">
@@ -1144,9 +1226,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7l9-4 9 4-9 4-9-4zm0 6l9 4 9-4m-9 4v6" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">API と SDK</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="API と SDK" data-en="APIs &amp; SDKs">API と SDK</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。" data-en="SDKs for JavaScript, Rust, and Python integrate quickly with existing systems so you can launch wallets and payment services fast.">JavaScript、Rust、Python向けSDKで既存システムに迅速統合。ウォレットや決済サービスを短期間で構築可能。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
                 <span class="chip">API</span>
                 <span class="chip bg-amber-50 text-amber-600 border-amber-100">SDK</span>
@@ -1159,12 +1241,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
                   </svg>
                 </span>
-                <h3 class="text-xl font-semibold text-slate-900">自動ロールバック</h3>
+                <h3 class="text-xl font-semibold text-slate-900" data-ja="自動ロールバック" data-en="Automated rollback">自動ロールバック</h3>
               </div>
-              <p class="text-sm leading-relaxed text-slate-600">異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。</p>
+              <p class="text-sm leading-relaxed text-slate-600" data-ja="異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。" data-en="When anomalies are detected, freeze the affected scope instantly and run recovery and notification workflows automatically to protect business continuity.">異常を検知すると影響範囲を即時凍結し、復旧手順と連絡フローを自動実行。ビジネス継続性を確保します。</p>
               <div class="flex items-center gap-2 text-xs text-slate-500">
-                <span class="chip bg-sky-50 text-sky-600 border-sky-100">冗長構成</span>
-                <span class="chip">リスク制御</span>
+                <span class="chip bg-sky-50 text-sky-600 border-sky-100" data-ja="冗長構成" data-en="Redundant architecture">冗長構成</span>
+                <span class="chip" data-ja="リスク制御" data-en="Risk controls">リスク制御</span>
               </div>
             </article>
           </div>
@@ -1177,29 +1259,29 @@
             <div class="absolute -left-12 top-16 h-48 w-48 rounded-full bg-blue-100 blur-3xl"></div>
             <div class="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               <div class="space-y-6">
-                <span class="badge-soft">アーキテクチャ</span>
-                <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">三層構造で性能・透明性・安全性を両立</h2>
-                <p class="text-base text-slate-600">アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。</p>
+                <span class="badge-soft" data-ja="アーキテクチャ" data-en="Architecture">アーキテクチャ</span>
+                <h2 class="text-3xl font-semibold md:text-4xl text-slate-900" data-ja="三層構造で性能・透明性・安全性を両立" data-en="Three-tier architecture balancing performance, transparency, and security">三層構造で性能・透明性・安全性を両立</h2>
+                <p class="text-base text-slate-600" data-ja="アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。" data-en="Separate access, service, and on-chain layers to meet compliance requirements while enabling fast releases.">アクセス層、サービス層、オンチェーン層を分離し、コンプライアンス要件を満たしながら高速なリリースを実現します。</p>
                 <div class="grid gap-5 text-sm text-slate-600">
                   <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.05s">
                     <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">1</div>
                     <div>
-                      <h3 class="text-lg font-semibold text-slate-900">アクセス層</h3>
-                      <p class="mt-1">管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。</p>
+                      <h3 class="text-lg font-semibold text-slate-900" data-ja="アクセス層" data-en="Access layer">アクセス層</h3>
+                      <p class="mt-1" data-ja="管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。" data-en="Provide management console, API gateway, and SDK to centralize authentication, authorization, and activity logs.">管理コンソール、APIゲートウェイ、SDKを提供し、認証・権限・操作ログを一元化。</p>
                     </div>
                   </div>
                   <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.1s">
                     <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">2</div>
                     <div>
-                      <h3 class="text-lg font-semibold text-slate-900">サービス層</h3>
-                      <p class="mt-1">発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。</p>
+                      <h3 class="text-lg font-semibold text-slate-900" data-ja="サービス層" data-en="Service layer">サービス層</h3>
+                      <p class="mt-1" data-ja="発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。" data-en="Turn issuance rules, settlement, and risk monitoring into microservices to maintain high availability.">発行ルール、清算、リスク監視をマイクロサービス化し、高可用性を維持。</p>
                     </div>
                   </div>
                   <div class="flex gap-4 reveal-card" data-animate style="--delay: 0.15s">
                     <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold text-blue-600">3</div>
                     <div>
-                      <h3 class="text-lg font-semibold text-slate-900">オンチェーン層</h3>
-                      <p class="mt-1">DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。</p>
+                      <h3 class="text-lg font-semibold text-slate-900" data-ja="オンチェーン層" data-en="On-chain layer">オンチェーン層</h3>
+                      <p class="mt-1" data-ja="DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。" data-en="Template DAO governance, cross-chain settlement, and bridge compliance for safe expansion.">DAOガバナンス、クロスチェーン決済、ブリッジ適合をテンプレート化し、安全に拡張。</p>
                     </div>
                   </div>
                 </div>
@@ -1207,23 +1289,23 @@
               <div class="card-base relative overflow-hidden p-8">
                 <div class="absolute -top-16 right-0 h-44 w-44 rounded-full bg-cyan-100 blur-3xl"></div>
                 <div class="relative space-y-6 text-sm text-slate-600">
-                  <h3 class="text-lg font-semibold text-slate-900">運用ベストプラクティス</h3>
+                  <h3 class="text-lg font-semibold text-slate-900" data-ja="運用ベストプラクティス" data-en="Operational best practices">運用ベストプラクティス</h3>
                   <ul class="space-y-3">
                     <li class="flex items-start gap-3">
                       <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-blue-500"></span>
-                      <span>サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。</span>
+                      <span data-ja="サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。" data-en="Isolate services in containers and connect via message bus to minimize interference when scaling.">サービスを独立コンテナ化してメッセージバス連携、スケール時の干渉を最小化。</span>
                     </li>
                     <li class="flex items-start gap-3">
                       <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                      <span>Vault等で鍵管理、多重署名でチェーン上の操作を保護。</span>
+                      <span data-ja="Vault等で鍵管理、多重署名でチェーン上の操作を保護。" data-en="Manage keys with Vault and shield on-chain actions with multi-signatures.">Vault等で鍵管理、多重署名でチェーン上の操作を保護。</span>
                     </li>
                     <li class="flex items-start gap-3">
                       <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-amber-500"></span>
-                      <span>Prometheus + Grafanaで指標を可視化し、アラートを自動化。</span>
+                      <span data-ja="Prometheus + Grafanaで指標を可視化し、アラートを自動化。" data-en="Use Prometheus + Grafana to visualize metrics and automate alerts.">Prometheus + Grafanaで指標を可視化し、アラートを自動化。</span>
                     </li>
                     <li class="flex items-start gap-3">
                       <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-fuchsia-500"></span>
-                      <span>ブルーグリーンデプロイとスマートコントラクト監査で更新リスクを抑制。</span>
+                      <span data-ja="ブルーグリーンデプロイとスマートコントラクト監査で更新リスクを抑制。" data-en="Curb release risk with blue-green deploys and smart contract audits.">ブルーグリーンデプロイとスマートコントラクト監査で更新リスクを抑制。</span>
                     </li>
                   </ul>
                 </div>
@@ -1236,9 +1318,9 @@
       <section id="partners" class="fade-section" data-section style="--delay: 0.14s">
         <div class="mx-auto max-w-6xl px-6 pb-24">
           <div class="mx-auto max-w-3xl text-center space-y-4">
-            <span class="badge-soft">エコシステム</span>
-            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">主要チェーン・金融機関・パートナーと連携</h2>
-            <p class="text-base text-slate-600">モジュール式、業務管理機能対応、既存システムを迅速に統合し、エコシステムを拡張します。</p>
+            <span class="badge-soft" data-ja="エコシステム" data-en="Ecosystem">エコシステム</span>
+            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900" data-ja="主要チェーン・金融機関・パートナーと連携" data-en="Connect with leading chains, financial institutions, and partners">主要チェーン・金融機関・パートナーと連携</h2>
+            <p class="text-base text-slate-600" data-ja="モジュール式、業務管理機能対応、既存システムを迅速に統合し、エコシステムを拡張します。" data-en="Modular operations tooling integrates quickly with existing systems to grow your ecosystem.">モジュール式、業務管理機能対応、既存システムを迅速に統合し、エコシステムを拡張します。</p>
           </div>
           <div class="card-base mt-14 p-6 md:p-8">
             <div class="partner-carousel">
@@ -1250,16 +1332,16 @@
                   <img src="images/tokyostar.png" alt="Tokyo Star Bank" />
                 </div>
                 <div class="partner-logo">
-                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="オリックス銀行" />
+                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="Orix Bank" />
                 </div>
                 <div class="partner-logo">
-                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="あおぞら銀行" />
+                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="Aozora Bank" />
                 </div>
                 <div class="partner-logo">
                   <img src="https://cdn.prod.website-files.com/63bcd69729ab7f3ec1ad210a/64bf04d14176fe2fb1aff258_Nethermind_Light_Horizontal%201.webp" alt="Nethermind" />
                 </div>
                 <div class="partner-logo">
-                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="電通ジャパン" />
+                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="Dentsu Japan" />
                 </div>
 
                 <div class="partner-logo" aria-hidden="true">
@@ -1269,16 +1351,16 @@
                   <img src="images/tokyostar.png" alt="Tokyo Star Bank" />
                 </div>
                 <div class="partner-logo" aria-hidden="true">
-                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="オリックス銀行" />
+                  <img src="https://www.japanopenchain.org/img/logo/orix-logo.png" alt="Orix Bank" />
                 </div>
                 <div class="partner-logo" aria-hidden="true">
-                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="あおぞら銀行" />
+                  <img src="https://www.japanopenchain.org/img/logo/svg/aozora-logo.svg" alt="Aozora Bank" />
                 </div>
                 <div class="partner-logo" aria-hidden="true">
                   <img src="https://cdn.prod.website-files.com/63bcd69729ab7f3ec1ad210a/64bf04d14176fe2fb1aff258_Nethermind_Light_Horizontal%201.webp" alt="Nethermind" />
                 </div>
                 <div class="partner-logo" aria-hidden="true">
-                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="電通ジャパン" />
+                  <img src="https://www.japanopenchain.org/img/logo/svg/dentsu-logo.svg" alt="Dentsu Japan" />
                 </div>
               </div>
             </div>
@@ -1290,45 +1372,45 @@
         <div class="mx-auto max-w-6xl px-6 pb-24">
           <div class="mx-auto max-w-3xl text-center space-y-4">
             <span class="badge-soft">FAQ</span>
-            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">導入前によくある質問</h2>
-            <p class="text-base text-slate-600">ステーブルコイン導入プロジェクトで頻出する疑問をまとめ、評価と意思決定をスムーズにします。</p>
+            <h2 class="text-3xl font-semibold md:text-4xl text-slate-900" data-ja="導入前によくある質問" data-en="Frequently asked questions before adoption">導入前によくある質問</h2>
+            <p class="text-base text-slate-600" data-ja="ステーブルコイン導入プロジェクトで頻出する疑問をまとめ、評価と意思決定をスムーズにします。" data-en="We collected frequent questions from stablecoin rollouts to streamline evaluation and decisions.">ステーブルコイン導入プロジェクトで頻出する疑問をまとめ、評価と意思決定をスムーズにします。</p>
           </div>
           <div class="mt-12 space-y-5">
             <details class="card-base group p-6 transition hover:shadow-[0_25px_60px_-40px_rgba(15,23,42,0.4)]">
               <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-slate-900">
-                価値の安定性はどのように担保されていますか？
+                <span class="summary-text" data-ja="価値の安定性はどのように担保されていますか？" data-en="How do you maintain price stability?">価値の安定性はどのように担保されていますか？</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
                 </svg>
               </summary>
-              <p class="mt-4 text-sm leading-relaxed text-slate-600">オンチェーン化された準備資産と外部オラクルの価格検証、そして自動清算ロジックにより担保率を常に既定値以上に維持します。</p>
+              <p class="mt-4 text-sm leading-relaxed text-slate-600" data-ja="オンチェーン化された準備資産と外部オラクルの価格検証、そして自動清算ロジックにより担保率を常に既定値以上に維持します。" data-en="Tokenized reserve assets, external oracle price checks, and automated liquidation logic keep collateral ratios above the threshold.">オンチェーン化された準備資産と外部オラクルの価格検証、そして自動清算ロジックにより担保率を常に既定値以上に維持します。</p>
             </details>
             <details class="card-base group p-6 transition hover:shadow-[0_25px_60px_-40px_rgba(15,23,42,0.4)]">
               <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-slate-900">
-                各国の規制に適合できますか？
+                <span class="summary-text" data-ja="各国の規制に適合できますか？" data-en="Can you comply with regulations in each country?">各国の規制に適合できますか？</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
                 </svg>
               </summary>
-              <p class="mt-4 text-sm leading-relaxed text-slate-600">リージョン別KYCポリシーとテンプレートを内蔵し、監督当局向けレポートも自動生成。法務チームとの共同作業を容易にします。</p>
+              <p class="mt-4 text-sm leading-relaxed text-slate-600" data-ja="リージョン別KYCポリシーとテンプレートを内蔵し、監督当局向けレポートも自動生成。法務チームとの共同作業を容易にします。" data-en="Built-in regional KYC policies and templates auto-generate regulator reports and streamline collaboration with legal teams.">リージョン別KYCポリシーとテンプレートを内蔵し、監督当局向けレポートも自動生成。法務チームとの共同作業を容易にします。</p>
             </details>
             <details class="card-base group p-6 transition hover:shadow-[0_25px_60px_-40px_rgba(15,23,42,0.4)]">
               <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-slate-900">
-                運用中のリスクやインシデントにはどう対応しますか？
+                <span class="summary-text" data-ja="運用中のリスクやインシデントにはどう対応しますか？" data-en="How do you respond to operational risks or incidents?">運用中のリスクやインシデントにはどう対応しますか？</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
                 </svg>
               </summary>
-              <p class="mt-4 text-sm leading-relaxed text-slate-600">集中監視パネルと自動アラートにより、異常検知時はアドレス凍結・ロールバック・担当者通知を瞬時に実行します。</p>
+              <p class="mt-4 text-sm leading-relaxed text-slate-600" data-ja="集中監視パネルと自動アラートにより、異常検知時はアドレス凍結・ロールバック・担当者通知を瞬時に実行します。" data-en="Centralized monitoring and automated alerts freeze addresses, roll back states, and notify owners immediately when anomalies appear.">集中監視パネルと自動アラートにより、異常検知時はアドレス凍結・ロールバック・担当者通知を瞬時に実行します。</p>
             </details>
             <details class="card-base group p-6 transition hover:shadow-[0_25px_60px_-40px_rgba(15,23,42,0.4)]">
               <summary class="flex cursor-pointer items-center justify-between text-left text-lg font-semibold text-slate-900">
-                どのようなデプロイ形態に対応していますか？
+                <span class="summary-text" data-ja="どのようなデプロイ形態に対応していますか？" data-en="Which deployment models do you support?">どのようなデプロイ形態に対応していますか？</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 9l6 6 6-6" />
                 </svg>
               </summary>
-              <p class="mt-4 text-sm leading-relaxed text-slate-600">SaaS、プライベートクラウド、ハイブリッドクラウドの3方式を提供し、データ所在や規制要件に応じた柔軟な構成が可能です。</p>
+              <p class="mt-4 text-sm leading-relaxed text-slate-600" data-ja="SaaS、プライベートクラウド、ハイブリッドクラウドの3方式を提供し、データ所在や規制要件に応じた柔軟な構成が可能です。" data-en="We offer SaaS, private cloud, and hybrid approaches so you can align infrastructure with data residency and regulatory needs.">SaaS、プライベートクラウド、ハイブリッドクラウドの3方式を提供し、データ所在や規制要件に応じた柔軟な構成が可能です。</p>
             </details>
           </div>
         </div>
@@ -1339,15 +1421,15 @@
           <div class="card-base relative overflow-hidden px-10 py-14 text-center">
             <div class="absolute inset-x-10 -top-16 h-32 rounded-full bg-gradient-to-r from-blue-200 via-cyan-200 to-transparent blur-3xl"></div>
             <div class="relative space-y-6">
-              <span class="badge-soft mx-auto">今すぐ体験</span>
-              <h2 class="text-3xl font-semibold md:text-4xl text-slate-900">30分でサンドボックス環境を構築</h2>
-              <p class="mx-auto max-w-2xl text-base text-slate-600">ニーズを送信いただければ、1営業日以内にテクニカルアドバイザーが連絡し、アーキテクチャと移行プランを提案します。</p>
+              <span class="badge-soft mx-auto" data-ja="今すぐ体験" data-en="Try it now">今すぐ体験</span>
+              <h2 class="text-3xl font-semibold md:text-4xl text-slate-900" data-ja="30分でサンドボックス環境を構築" data-en="Stand up a sandbox in 30 minutes">30分でサンドボックス環境を構築</h2>
+              <p class="mx-auto max-w-2xl text-base text-slate-600" data-ja="ニーズを送信いただければ、1営業日以内にテクニカルアドバイザーが連絡し、アーキテクチャと移行プランを提案します。" data-en="Share your needs and a technical advisor will reply within one business day with architecture and migration proposals.">ニーズを送信いただければ、1営業日以内にテクニカルアドバイザーが連絡し、アーキテクチャと移行プランを提案します。</p>
               <div class="flex flex-col items-center justify-center gap-3 text-sm text-slate-600 md:flex-row">
-                <span class="chip bg-blue-50 text-blue-600 border-blue-100">企業向けホワイトリスト</span>
-                <span class="chip">グローバルタイムゾーン対応</span>
+                <span class="chip bg-blue-50 text-blue-600 border-blue-100" data-ja="企業向けホワイトリスト" data-en="Enterprise whitelist">企業向けホワイトリスト</span>
+                <span class="chip" data-ja="グローバルタイムゾーン対応" data-en="Global timezone coverage">グローバルタイムゾーン対応</span>
               </div>
               <div class="flex justify-center">
-                <a href="mailto:bd@stablecoin.io" class="cta-button inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white" data-ja="お問い合わせフォームへ" data-en="Open Inquiry Form">お問い合わせフォームへ</a>
+                <a href="https://www.gu-group.com/ja/contact/" class="cta-button inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-white" data-ja="お問い合わせフォームへ" data-en="Open Inquiry Form" data-ja-href="https://www.gu-group.com/ja/contact/" data-en-href="https://www.gu-group.com/contact/">お問い合わせフォームへ</a>
               </div>
             </div>
           </div>
@@ -1466,6 +1548,13 @@
           const text = element.getAttribute(`data-${this.currentLang}`);
           if (text) {
             element.textContent = text;
+          }
+        });
+
+        document.querySelectorAll('[data-ja-href][data-en-href]').forEach(link => {
+          const href = link.getAttribute(`data-${this.currentLang}-href`);
+          if (href) {
+            link.setAttribute('href', href);
           }
         });
 
@@ -1618,6 +1707,67 @@
       }
     }
 
+    class MobileMenu {
+      constructor() {
+        this.toggleButton = document.getElementById('mobile-menu-toggle');
+        this.menu = document.getElementById('mobile-menu');
+        this.panel = this.menu ? this.menu.querySelector('.mobile-menu-panel') : null;
+
+        if (!this.toggleButton || !this.menu) {
+          return;
+        }
+
+        this.links = Array.from(this.menu.querySelectorAll('a'));
+        this.isOpen = false;
+
+        this.init();
+      }
+
+      init() {
+        this.toggleButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          this.toggleMenu();
+        });
+
+        if (this.panel) {
+          this.panel.addEventListener('click', (event) => {
+            event.stopPropagation();
+          });
+        }
+
+        document.addEventListener('click', () => {
+          this.closeMenu();
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            this.closeMenu();
+          }
+        });
+
+        this.links.forEach(link => {
+          link.addEventListener('click', () => {
+            this.closeMenu();
+          });
+        });
+      }
+
+      toggleMenu() {
+        const isHidden = this.menu.classList.toggle('hidden');
+        this.isOpen = !isHidden;
+        this.toggleButton.setAttribute('aria-expanded', String(this.isOpen));
+      }
+
+      closeMenu() {
+        if (!this.menu.classList.contains('hidden')) {
+          this.menu.classList.add('hidden');
+          this.toggleButton.setAttribute('aria-expanded', 'false');
+          this.isOpen = false;
+        }
+      }
+    }
+
     // Modern Animation System with Intersection Observer
     class AnimationController {
       constructor() {
@@ -1761,6 +1911,7 @@
     const initializePage = () => {
       new ThemeManager();
       new LanguageManager();
+      new MobileMenu();
       new AnimationController();
       new ImageCarousel();
     };
